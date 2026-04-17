@@ -4,6 +4,7 @@ import helmet from "helmet";
 import dotenv from "dotenv";
 import { connectDB } from "./utils/db";
 import { globalLimiter } from "./middleware/rateLimiter";
+import authRoutes from "./routes/auth";
 
 dotenv.config();
 
@@ -21,6 +22,8 @@ app.use(
 );
 
 app.use(express.json({ limit: "10kb" }));
+
+app.use("/api/auth", authRoutes);
 
 app.get("/api/health", (_req, res) => {
   res.json({

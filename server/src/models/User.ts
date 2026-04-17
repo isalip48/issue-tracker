@@ -47,7 +47,7 @@ const UserSchema = new Schema<IUser>(
         ret["id"] = ret["_id"];
         delete ret["_id"];
         delete ret["__v"];
-        delete ret["passwordHash"];
+        delete ret["password"];
         return ret;
       },
     },
@@ -72,4 +72,4 @@ UserSchema.methods.comparePassword = async function (
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-export const UserModel = model<IUser>("User", UserSchema);
+export const User = model<IUser>("User", UserSchema);
