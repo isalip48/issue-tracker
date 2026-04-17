@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 @layer base {
   :root {
@@ -20,11 +20,11 @@
   }
 
   * {
-    @apply border-border;
+    @apply border-slate-200 dark:border-slate-700;
   }
 
   body {
     @apply bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-50;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
   }
 }
