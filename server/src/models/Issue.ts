@@ -26,8 +26,8 @@ export interface IIssue extends Document {
   severity: IssueSeverity;
   tags: string[];
   reporter: Types.ObjectId;
-  assignee?: Types.ObjectId; 
-  resolvedAt?: Date; 
+  assignee?: Types.ObjectId;
+  resolvedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -75,14 +75,14 @@ const IssueSchema = new Schema<IIssue>(
     },
 
     tags: {
-      type: [String], 
+      type: [String],
       default: [],
       set: (tags: string[]) => tags.map((t) => t.trim().toLowerCase()),
     },
 
     reporter: {
-      type: Schema.Types.ObjectId, 
-      ref: "User", 
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: [true, "Reporter is required"],
     },
 
