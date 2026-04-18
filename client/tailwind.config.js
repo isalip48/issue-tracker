@@ -1,17 +1,35 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
-
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-
   theme: {
     extend: {
       fontFamily: {
         sans: ["DM Sans", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
       },
-
       colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
         brand: {
           50: "#eef2ff",
           100: "#e0e7ff",
@@ -24,7 +42,11 @@ export default {
           900: "#312e81",
         },
       },
-
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
       keyframes: {
         "slide-in": {
           from: { opacity: "0", transform: "translateX(-10px)" },
@@ -39,7 +61,6 @@ export default {
           "50%": { opacity: "0.4" },
         },
       },
-
       animation: {
         "slide-in": "slide-in 0.2s ease-out",
         "fade-up": "fade-up 0.3s ease-out",
@@ -47,6 +68,5 @@ export default {
       },
     },
   },
-
   plugins: [require("tailwindcss-animate")],
 };

@@ -1,75 +1,85 @@
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
-    --background:       0 0% 100%;
-    --foreground:       222 47% 11%;
-    --card:             0 0% 100%;
-    --card-foreground:  222 47% 11%;
-    --primary:          239 84% 67%;   /* brand-500 */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --primary: 239 84% 67%;
     --primary-foreground: 0 0% 100%;
-    --secondary:        215 20% 96%;
+    --secondary: 215 20% 96%;
     --secondary-foreground: 222 47% 11%;
-    --muted:            215 20% 96%;
+    --muted: 215 20% 96%;
     --muted-foreground: 215 16% 47%;
-    --border:           214 32% 91%;
-    --input:            214 32% 91%;
-    --ring:             239 84% 67%;
-    --radius:           0.5rem;
-    --sidebar-width:    240px;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 239 84% 67%;
+    --radius: 0.5rem;
   }
 
   .dark {
-    --background:       222 47% 7%;    
-    --foreground:       210 40% 96%;
-    --card:             222 47% 10%;
-    --card-foreground:  210 40% 96%;
-    --primary:          239 84% 67%;  
+    --background: 222 47% 7%;
+    --foreground: 210 40% 96%;
+    --card: 222 47% 10%;
+    --card-foreground: 210 40% 96%;
+    --primary: 239 84% 67%;
     --primary-foreground: 0 0% 100%;
-    --secondary:        217 33% 15%;
+    --secondary: 217 33% 15%;
     --secondary-foreground: 210 40% 96%;
-    --muted:            217 33% 15%;
+    --muted: 217 33% 15%;
     --muted-foreground: 215 20% 56%;
-    --border:           217 33% 18%;
-    --input:            217 33% 18%;
-    --ring:             239 84% 67%;
+    --border: 217 33% 18%;
+    --input: 217 33% 18%;
+    --ring: 239 84% 67%;
   }
 
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
     box-sizing: border-box;
   }
 
   html {
-    @apply scroll-smooth;
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: "DM Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  ::-webkit-scrollbar       { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { @apply bg-transparent; }
-  ::-webkit-scrollbar-thumb { @apply bg-border rounded-full; }
-  ::-webkit-scrollbar-thumb:hover { @apply bg-muted-foreground; }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
+  }
 }
 
 @layer utilities {
   .sidebar-transition {
-    transition: width 0.25s ease, transform 0.25s ease;
+    transition:
+      width 0.25s ease,
+      transform 0.25s ease;
   }
-
   .glass {
-    @apply bg-white/5 backdrop-blur-sm border border-white/10;
-  }
-
-  .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-background;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
