@@ -41,16 +41,6 @@ export const AuthLayout = ({
         animationClass,
       )}
     >
-      <div
-        className="fixed inset-0 pointer-events-none opacity-[0.05] z-0"
-        style={{
-          backgroundImage: `radial-gradient(circle at center, hsl(var(--foreground)) 1px, transparent 1px)`,
-          backgroundSize: "24px 24px",
-        }}
-      />
-
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none z-0" />
-
       <div className="relative z-10 w-full max-w-[920px] min-h-[600px] grid grid-cols-1 lg:grid-cols-2 rounded-2xl overflow-hidden border border-border bg-card shadow-2xl">
         <div className="relative hidden lg:flex flex-col justify-between p-10 bg-background/50 border-r border-border overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />

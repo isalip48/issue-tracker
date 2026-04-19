@@ -1,37 +1,21 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useUIStore } from "../../store/uiStore";
 import { Sidebar } from "./Sidebar";
 import { Navbar } from "./Navbar";
 
-const pageTitles: Record<string, string> = {
-  "/dashboard": "Dashboard",
-  "/issues": "All Issues",
-  "/issues/new": "Create Issue",
-  "/settings": "Settings",
-};
-
 export const AppLayout = () => {
   const { isSidebarOpen } = useUIStore();
-  const location = useLocation();
 
-   const title =
-    pageTitles[location.pathname] ||
-    (location.pathname.includes("/issues/") ? "Issue Detail" : "Issue Tracker");
-
-    return (
-    <div className="min-h-screen bg-background">
+  return (
+    <div className="min-h-screen bg-background relative">
       <Sidebar />
 
       <div
-        className="flex flex-col min-h-screen"
-        style={{
-          marginLeft: isSidebarOpen ? "240px" : "64px",
-          transition: "margin-left 0.25s ease",
-        }}
+        className="relative z-10 flex flex-col min-h-screen transition-all duration-300 ease-out"
+        style={{ marginLeft: isSidebarOpen ? "256px" : "72px" }}
       >
-        <Navbar title={title} />
-
-        <main className="flex-1 pt-16 p-6">
+        <Navbar />
+        <main className="flex-1 pt-20 p-8">
           <Outlet />
         </main>
       </div>

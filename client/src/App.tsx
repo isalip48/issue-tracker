@@ -1,36 +1,42 @@
+// client/src/App.tsx
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Toaster } from "sonner";
-import { AppLayout } from "./components/layout/AppLayout";
+import { Toaster }        from "sonner";
+import { AppLayout }      from "./components/layout/AppLayout";
 import { ProtectedRoute } from "./components/shared/ProtectedRoute";
-import { LoginPage } from "./pages/LoginPage";
-import { RegisterPage } from "./pages/RegisterPage";
-import { Dashboard } from "./pages/Dashboard";
-import { IssueListPage } from "./pages/IssueListPage";
+import { AmbientBlobs }   from "./components/shared/AmbientBlobs";
+import { LoginPage }      from "./pages/LoginPage";
+import { RegisterPage }   from "./pages/RegisterPage";
+import { Dashboard }      from "./pages/Dashboard";
+import { IssueListPage }  from "./pages/IssueListPage";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Toaster
-        position="bottom-right"
-        richColors
-        expand={false}
-        duration={3000}
-      />
+    <>
+      {/* Global ambient backdrop — dot-grid + glow blobs over the entire app */}
+      <AmbientBlobs />
 
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+      <BrowserRouter>
+        <Toaster position="bottom-right" richColors expand={false} duration={3000} />
+        <Routes>
+          {/* Public */}
+          <Route path="/login"    element={<LoginPage />}    />
+          <Route path="/register" element={<RegisterPage />} />
 
-        <Route element={<ProtectedRoute />}>
-          <Route element={<AppLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/issues" element={<IssueListPage />} />
+          {/* Protected */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<AppLayout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/issues"    element={<IssueListPage />} />
+              <Route path="/issues/new"  element={<div className="p-6 text-muted-foreground">Create Issue — coming soon</div>} />
+              <Route path="/issues/:id"  element={<div className="p-6 text-muted-foreground">Issue Detail — coming soon</div>} />
+              <Route path="/settings"    element={<div className="p-6 text-muted-foreground">Settings — coming soon</div>} />
+            </Route>
           </Route>
-        </Route>
 
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
