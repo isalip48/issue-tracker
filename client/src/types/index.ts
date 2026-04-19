@@ -52,7 +52,9 @@ export interface APIResponse<T> {
 
 export interface PaginatedResponse<T> {
   success: boolean;
-  data: T[];
+  data: {
+    issues: T[];
+  };
 
   pagination: {
     total: number;
@@ -64,23 +66,25 @@ export interface PaginatedResponse<T> {
 
 export interface IssueFilters {
   search?: string;
-  status?: IssueStatus;
-  priority?: IssuePriority;
-  severity?: IssueSeverity;
+  status?: IssueStatus | "";
+  priority?: IssuePriority | "";
+  severity?: IssueSeverity | "";
   page?: number;
   limit?: number;
+  sortBy?: "createdAt" | "updatedAt" | "priority" | "status";
+  order?: "asc" | "desc";
 }
 
 export interface AuthTokens {
-    accessToken: string;
-    refreshToken: string;
+  accessToken: string;
+  refreshToken: string;
 }
 
 export interface LoginCredentials {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export interface RegisterCredentials extends LoginCredentials {
-    name: string;
+  name: string;
 }

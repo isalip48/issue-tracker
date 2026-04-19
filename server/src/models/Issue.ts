@@ -101,8 +101,7 @@ const IssueSchema = new Schema<IIssue>(
     timestamps: true,
     toJSON: {
       transform(_doc, ret: Record<string, unknown>) {
-        ret["id"] = ret["_id"];
-        delete ret["_id"];
+        ret["_id"] = ret["_id"]?.toString();
         delete ret["__v"];
         return ret;
       },

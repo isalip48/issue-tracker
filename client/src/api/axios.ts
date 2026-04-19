@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useAuthStore } from "../store/authStore";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
@@ -10,10 +11,10 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("accessToken");
+    const token = useAuthStore.getState().accessToken;
 
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.set("Authorization", `Bearer ${token}`);
     }
     return config;
   },
@@ -59,7 +60,7 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const refreshToken = localStorage.getItem("refreshToken");
+        const refreshToken = useAuthStore.getState().refreshToken;
 
         if (!refreshToken) {
           throw new Error("No refresh token available");
@@ -70,20 +71,27 @@ api.interceptors.response.use(
           { refreshToken },
         );
 
-        const { accessToken } = response.data;
+        const { accessToken, refreshToken: newRefreshToken } = response.data
+          .data
+          ? response.data.data
+          : response.data;
+        const user = useAuthStore.getState().user;
 
-        localStorage.setItem("accessToken", accessToken);
+        if (user && accessToken) {
+          useAuthStore
+            .getState()
+            .setAuth(user, accessToken, newRefreshToken || refreshToken);
+        }
 
         api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        originalRequest.headers.set("Authorization", `Bearer ${accessToken}`);
 
         processQueue(null, accessToken);
 
         return api(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError, null);
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
+        useAuthStore.getState().clearAuth();
         window.location.href = "/login";
         return Promise.reject(refreshError);
       } finally {

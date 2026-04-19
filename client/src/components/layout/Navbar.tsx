@@ -1,45 +1,48 @@
 import { MdDarkMode, MdLightMode, MdNotifications } from "react-icons/md";
-import { useUIStore }  from "../../store/uiStore";
+import { useUIStore } from "../../store/uiStore";
 import { useAuthStore } from "../../store/authStore";
 
-interface NavbarProps {
-  title?: string;
-}
-
-export const Navbar = ({ title = "Dashboard" }: NavbarProps) => {
+export const Navbar = () => {
   const { isDarkMode, toggleDarkMode, isSidebarOpen } = useUIStore();
   const { user } = useAuthStore();
 
   return (
     <header
-      className="fixed top-0 right-0 z-30 h-16 border-b border-border bg-background/80 backdrop-blur-sm flex items-center px-6"
-      style={{
-        left: isSidebarOpen ? "240px" : "64px",
-        transition: "left 0.25s ease",
-      }}
+      className="fixed top-0 right-0 z-30 h-20 flex items-center justify-end px-8 transition-all duration-300"
+      style={{ left: isSidebarOpen ? "256px" : "72px" }}
     >
-      <h1 className="text-sm font-semibold flex-1">{title}</h1>
-
-      <div className="flex items-center gap-2">
-
-        <button className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors relative">
-          <MdNotifications size={20} />
-          <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-brand-500 rounded-full animate-pulse-dot" />
+      <div className="flex items-center gap-1">
+        <button
+          className="p-2.5 rounded-xl text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors relative group"
+          aria-label="Notifications"
+        >
+          <MdNotifications
+            size={20}
+            className="group-hover:scale-110 transition-transform"
+          />
+          <span className="absolute top-2 right-2.5 w-2 h-2 bg-primary rounded-full shadow-[0_0_8px_rgba(99,102,241,0.8)] animate-pulse" />
         </button>
 
         <button
           onClick={toggleDarkMode}
-          className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+          className="p-2.5 rounded-xl text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors group"
           aria-label="Toggle dark mode"
         >
-          {isDarkMode
-            ? <MdLightMode size={20} />
-            : <MdDarkMode  size={20} />
-          }
+          {isDarkMode ? (
+            <MdLightMode
+              size={20}
+              className="group-hover:rotate-12 transition-transform"
+            />
+          ) : (
+            <MdDarkMode
+              size={20}
+              className="group-hover:-rotate-12 transition-transform"
+            />
+          )}
         </button>
 
         {user && (
-          <div className="w-8 h-8 rounded-full bg-brand-500 text-white flex items-center justify-center text-sm font-semibold ml-1">
+          <div className="w-9 h-9 rounded-full bg-primary/10 border border-primary/20 text-primary shadow-[0_0_15px_rgba(99,102,241,0.15)] flex items-center justify-center text-[13px] font-bold ml-2">
             {user.name.charAt(0).toUpperCase()}
           </div>
         )}

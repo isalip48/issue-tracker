@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MdArrowForward } from "react-icons/md";
 import { useRegister } from "../hooks/useAuth";
 import { FormInput } from "../components/shared/FormInput";
+import { AsyncButton } from "../components/shared/AsyncButton";
 import { registerSchema, type RegisterFormData } from "../utils";
 import { AuthLayout } from "../components/layout/AuthLayout";
 import { RegisterVisual } from "../components/auth/RegisterVisual";
@@ -161,21 +161,9 @@ export const RegisterPage = () => {
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={isPending}
-          className="group relative w-full h-[42px] mt-6 rounded-lg transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 overflow-hidden bg-secondary/40 text-foreground border border-border/50 shadow-sm hover:bg-secondary/80 hover:border-border"
-        >
-          {isPending ? (
-            <span className="w-4 h-4 border-2 rounded-full animate-spin border-background/20 border-t-background" />
-          ) : (
-            <>
-              <span className="text-[13px] font-semibold relative z-10 transition-transform group-hover:-translate-x-0.5 duration-300">
-                Create account
-              </span>
-            </>
-          )}
-        </button>
+        <AsyncButton type="submit" isLoading={isPending} className="mt-6">
+          Create account
+        </AsyncButton>
       </form>
     </AuthLayout>
   );
