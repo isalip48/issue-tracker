@@ -46,7 +46,7 @@ export interface ActivityLog {
 
 export interface APIResponse<T> {
   success: boolean;
-  data?: T;
+  data: T;
   message?: string;
 }
 
