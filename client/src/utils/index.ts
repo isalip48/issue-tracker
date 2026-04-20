@@ -118,5 +118,30 @@ export const exportToJSON = (issues: Issue[], filename = "issues"): void => {
   URL.revokeObjectURL(url);
 };
 
+export const issueFormSchema = z.object({
+  title: z
+    .string()
+    .min(3,   "Title must be at least 3 characters")
+    .max(150, "Title cannot exceed 150 characters"),
+
+  description: z
+    .string()
+    .min(10, "Description must be at least 10 characters"),
+
+  // .default() makes the INPUT optional but the OUTPUT always defined
+  // z.output gives us the post-transform type — fields are required
+  status:   z.enum(["Open", "In Progress", "Resolved", "Closed"]).default("Open"),
+  priority: z.enum(["Low", "Medium", "High", "Critical"]).default("Medium"),
+  severity: z.enum(["Minor", "Major", "Critical", "Blocker"]).default("Minor"),
+  tags:     z.array(z.string()).default([]),
+  assignee: z.string().optional(),
+});
+
+// z.output vs z.infer:
+// z.infer  → fields with .default() are typed as T | undefined (input type)
+// z.output → fields with .default() are typed as T (output type, after transform)
+// We want output because RHF validates the final submitted values
+export type IssueFormData = z.output<typeof issueFormSchema>;
+
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type RegisterFormData = z.infer<typeof registerSchema>;

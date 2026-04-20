@@ -89,7 +89,7 @@ export const RecentIssuesList = ({
             Recent Issues
           </h3>
           {issues.length > 0 && (
-            <span className="inline-flex items-center rounded-full bg-primary/10 border border-primary/20 px-2 py-0.5 text-[10px] font-bold text-primary">
+            <span className="inline-flex items-center rounded-full bg-primary/10 border border-primary/20 px-2 py-0.5 text-[12px] font-bold text-primary">
               {issues.length}
             </span>
           )}
@@ -116,9 +116,14 @@ export const RecentIssuesList = ({
           variant="default"
         />
       ) : (
-        <div className="p-3 space-y-1.5">
+        <div className="p-3">
           {issues.map((issue, idx) => (
-            <IssueRow key={issue._id} issue={issue} idx={idx} />
+            <div
+              key={issue._id}
+              className="border-b border-border/20 last:border-b-0"
+            >
+              <IssueRow issue={issue} idx={idx} />
+            </div>
           ))}
         </div>
       )}

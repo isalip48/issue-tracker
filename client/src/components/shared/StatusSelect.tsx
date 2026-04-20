@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { IoChevronDown } from "react-icons/io5";
 import { cn } from "../../lib/utils";
 
@@ -16,22 +17,42 @@ interface StatusSelectProps {
 
 export const StatusSelect = ({ value, onChange }: StatusSelectProps) => {
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
   const config = STATUS_CONFIG[value] ?? STATUS_CONFIG["Open"];
 
+  const [pos, setPos] = useState({ top: 0, left: 0 });
+
+  const updatePosition = () => {
+    if (!buttonRef.current) return;
+
+    const rect = buttonRef.current.getBoundingClientRect();
+
+    setPos({
+      top: rect.bottom + window.scrollY + 6,
+      left: rect.left + rect.width / 2,
+    });
+  };
+
   useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (buttonRef.current && !buttonRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
     };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (open) updatePosition();
+  }, [open]);
+
   return (
-    <div ref={ref} className="relative">
+    <>
       <button
+        ref={buttonRef}
         type="button"
         onClick={(e) => {
           e.stopPropagation();
@@ -55,42 +76,45 @@ export const StatusSelect = ({ value, onChange }: StatusSelectProps) => {
         />
       </button>
 
-      {open && (
-        <div
-          className="
-          absolute top-full left-1/2 -translate-x-1/2 mt-1.5 z-50
-          w-32 rounded-xl overflow-hidden
-          bg-[#141418] border border-white/[0.08]
-          shadow-[0_8px_24px_rgba(0,0,0,0.5)]
-          animate-fade-up
-        "
-        >
-          {Object.entries(STATUS_CONFIG).map(([status, cfg]) => (
-            <button
-              key={status}
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                onChange(status);
-                setOpen(false);
-              }}
-              className={cn(
-                "w-full flex items-center justify-center gap-1.5 px-3 py-2.5",
-                "text-xs font-medium font-mono transition-colors",
-                "hover:bg-white/[0.04]",
-                value === status
-                  ? cn(cfg.text, "bg-white/[0.03]")
-                  : "text-slate-400",
-              )}
-            >
-              {status}
-              {value === status && (
-                <span className="text-[10px] opacity-40">✓</span>
-              )}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+      {open &&
+        createPortal(
+          <div
+            className="
+              fixed z-50 w-32 rounded-xl overflow-hidden
+              bg-[#141418] border border-white/[0.08]
+              shadow-[0_8px_24px_rgba(0,0,0,0.5)]
+            "
+            style={{
+              top: pos.top,
+              left: pos.left,
+              transform: "translateX(-50%)",
+            }}
+          >
+            {Object.entries(STATUS_CONFIG).map(([status, cfg]) => (
+              <button
+                key={status}
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onChange(status);
+                  setOpen(false);
+                }}
+                className={cn(
+                  "w-full flex items-center justify-center gap-1.5 px-3 py-2.5",
+                  "text-xs font-medium font-mono transition-colors",
+                  "hover:bg-white/[0.04]",
+                  value === status ? cfg.text : "text-slate-400",
+                )}
+              >
+                {status}
+                {value === status && (
+                  <span className="text-[10px] opacity-40">✓</span>
+                )}
+              </button>
+            ))}
+          </div>,
+          document.body,
+        )}
+    </>
   );
 };

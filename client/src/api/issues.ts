@@ -46,8 +46,10 @@ export const issuesApi = {
     return data;
   },
 
-  getById: async (id: string): Promise<APIResponse<Issue>> => {
-    const { data } = await api.get(`/issues/${id}`);
+  getById: async (id: string): Promise<APIResponse<{ issue: Issue }>> => {
+    const { data } = await api.get<APIResponse<{ issue: Issue }>>(
+      `/issues/${id}`,
+    );
     return data;
   },
 

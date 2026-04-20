@@ -24,6 +24,7 @@ export interface Issue {
   severity: IssueSeverity;
   tags: string[];
   assignee?: User | null;
+  resolvedAt?: string;
   reporter: User;
   createdAt: string;
   updatedAt?: string;
