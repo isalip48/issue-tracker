@@ -60,7 +60,7 @@ export const TipTapEditor = ({
     editorProps: {
       attributes: {
         class:
-          "outline-none min-h-[160px] px-4 py-3 text-sm leading-relaxed text-foreground",
+          "outline-none min-h-[260px] px-4 py-3 text-sm leading-relaxed text-foreground",
       },
     },
   });
@@ -83,7 +83,6 @@ export const TipTapEditor = ({
           : "border-border focus-within:border-brand-500/50 focus-within:shadow-[0_0_0_3px_rgba(99,102,241,0.08)]",
       )}
     >
-      {/* Toolbar */}
       <div className="flex items-center gap-0.5 px-2 py-2 border-b border-border bg-secondary/50">
         <ToolbarButton
           title="Bold (Ctrl+B)"

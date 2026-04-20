@@ -30,9 +30,9 @@ export const PageHeader = ({
           </div>
 
           {subtitle && (
-            <p className="text-xs font-medium text-muted-foreground mt-1 flex items-center gap-2">
+            <div className="text-xs font-medium text-muted-foreground mt-1 flex items-center gap-2">
               {subtitle}
-            </p>
+            </div>
           )}
         </div>
       </div>

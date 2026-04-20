@@ -6,6 +6,7 @@ import { connectDB } from "./utils/db";
 import { globalLimiter } from "./middleware/rateLimiter";
 import authRoutes from "./routes/auth";
 import issueRoutes from "./routes/issues";
+import userRoutes from "./routes/users";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use(express.json({ limit: "10kb" }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/issues", issueRoutes);
+app.use("/api/users", userRoutes);
 
 app.get("/api/health", (_req, res) => {
   res.json({

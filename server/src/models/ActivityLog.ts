@@ -42,8 +42,7 @@ const ActivityLogSchema = new Schema<IActivityLog>(
     timestamps: { createdAt: false, updatedAt: false },
     toJSON: {
       transform(_doc, ret: Record<string, unknown>) {
-        ret["id"] = ret["_id"];
-        delete ret["_id"];
+        ret["_id"] = ret["_id"]?.toString();
         delete ret["__v"];
         return ret;
       },

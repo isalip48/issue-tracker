@@ -33,7 +33,7 @@ export interface CreateIssueData {
   priority?: string;
   severity?: string;
   tags?: string[];
-  assignee?: string;
+  assignee?: string | null;
 }
 
 export type UpdateIssueData = Partial<CreateIssueData>;

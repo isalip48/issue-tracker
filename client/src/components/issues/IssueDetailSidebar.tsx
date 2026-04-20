@@ -4,11 +4,32 @@ import {
   MdCheckCircle,
   MdLocalOffer,
   MdCancel,
+  MdRefresh,
+  MdPeople,
+  MdSchedule,
+  MdBolt,
+  MdTrackChanges,
 } from "react-icons/md";
-import { StatusBadge } from "@/components/shared/StatusBadge";
-import { PriorityBadge } from "@/components/shared/PriorityBadge";
 import { formatDate, formatRelativeTime } from "@/utils";
 import type { Issue } from "@/types";
+import { StatusWorkflow } from "@/components/issues/StatusWorkflow";
+
+const SidebarCardHeader = ({
+  icon,
+  title,
+}: {
+  icon: React.ReactNode;
+  title: string;
+}) => (
+  <div className="flex items-center gap-3 px-6 py-5 border-b border-border/60 bg-secondary/10">
+    <div className="w-8 h-8 rounded-lg bg-brand-500/10 flex items-center justify-center text-brand-500">
+      {icon}
+    </div>
+    <h3 className="text-xs font-black uppercase tracking-widest text-foreground">
+      {title}
+    </h3>
+  </div>
+);
 
 const DetailRow = ({
   label,
@@ -28,124 +49,72 @@ const DetailRow = ({
   </div>
 );
 
-const UserRow = ({
-  label,
+const UserChip = ({
   name,
   color = "bg-brand-500/20 text-brand-500",
 }: {
-  label: string;
   name: string;
   color?: string;
 }) => (
-  <DetailRow label={label} icon={<MdPerson size={13} />}>
-    <div className="flex items-center gap-1.5">
-      <div
-        className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-semibold ${color}`}
-      >
-        {name.charAt(0).toUpperCase()}
-      </div>
-      <span className="text-sm text-foreground">{name}</span>
+  <div className="flex items-center gap-1.5 justify-end">
+    <div
+      className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-semibold ${color}`}
+    >
+      {name.charAt(0).toUpperCase()}
     </div>
-  </DetailRow>
+    <span className="text-sm text-foreground">{name}</span>
+  </div>
 );
-
-// ── Severity Badge ────────────────────────────────────────────────────────────
-const SEVERITY_COLORS: Record<string, string> = {
-  Minor: "text-slate-400 bg-slate-500/10 border-slate-500/20",
-  Major: "text-amber-400 bg-amber-500/10 border-amber-500/20",
-  Critical: "text-orange-400 bg-orange-500/10 border-orange-500/20",
-  Blocker: "text-red-400 bg-red-500/10 border-red-500/20",
-};
 
 interface IssueDetailSidebarProps {
   issue: Issue;
   canResolve: boolean;
   canClose: boolean;
+  canReopen: boolean;
   onResolve: () => void;
   onClose: () => void;
+  onReopen: () => void;
 }
 
 export const IssueDetailSidebar = ({
   issue,
   canResolve,
   canClose,
+  canReopen,
   onResolve,
   onClose,
+  onReopen,
 }: IssueDetailSidebarProps) => {
   const reporter = issue.reporter as { name: string };
   const assignee = issue.assignee as { name?: string } | undefined;
+  const hasActions = canResolve || canClose || canReopen;
 
   return (
-    <div className="space-y-4 lg:sticky lg:top-6 self-start">
-      <div className="bg-card border border-border rounded-xl overflow-hidden">
-        {/* <div className="px-5 py-3 border-b border-border bg-secondary/20">
-          <h2 className="text-sm font-semibold text-foreground">Details</h2>
-        </div> */}
-
-        <div className="px-5 py-4 space-y-4">
-          <DetailRow label="Status">
-            <StatusBadge status={issue.status} />
+    <div className="space-y-4">
+      <div className="bg-card border border-border/60 rounded-3xl overflow-hidden shadow-xl shadow-foreground/[0.02]">
+        <SidebarCardHeader icon={<MdPeople size={16} />} title="People" />
+        <div className="p-6 space-y-4">
+          <DetailRow label="Reporter" icon={<MdPerson size={12} />}>
+            <UserChip name={reporter?.name ?? "Unknown"} />
           </DetailRow>
 
-          <DetailRow label="Priority">
-            <PriorityBadge priority={issue.priority} />
+          <DetailRow label="Assignee" icon={<MdPerson size={12} />}>
+            {assignee?.name ? (
+              <UserChip
+                name={assignee.name}
+                color="bg-green-500/20 text-green-500"
+              />
+            ) : (
+              <span className="text-xs text-muted-foreground italic">
+                Unassigned
+              </span>
+            )}
           </DetailRow>
 
-          <DetailRow label="Severity">
-            <span
-              className={`
-              inline-flex items-center px-2 py-0.5 rounded-full
-              text-xs font-medium border font-mono
-              ${SEVERITY_COLORS[issue.severity] ?? SEVERITY_COLORS.Minor}
-            `}
-            >
-              {issue.severity}
-            </span>
-          </DetailRow>
-
-          <div className="border-t border-border" />
-
-          <UserRow label="Reporter" name={reporter?.name ?? "Unknown"} />
-
-          {assignee?.name && (
-            <UserRow
-              label="Assignee"
-              name={assignee.name}
-              color="bg-green-500/20 text-green-500"
-            />
-          )}
-
-          <div className="border-t border-border" />
-
-          <DetailRow label="Created" icon={<MdCalendarToday size={13} />}>
-            <div>
-              <p className="text-sm text-foreground">
-                {formatDate(issue.createdAt)}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {formatRelativeTime(issue.createdAt)}
-              </p>
-            </div>
-          </DetailRow>
-
-          <DetailRow label="Updated" icon={<MdCalendarToday size={13} />}>
-            <p className="text-sm text-foreground">
-              {issue.updatedAt ? formatRelativeTime(issue.updatedAt) : "Never"}
-            </p>
-          </DetailRow>
-
-          {issue.resolvedAt && (
-            <DetailRow label="Resolved" icon={<MdCheckCircle size={13} />}>
-              <p className="text-sm text-green-500">
-                {formatDate(issue.resolvedAt)}
-              </p>
-            </DetailRow>
-          )}
-
-          {issue.tags?.length > 0 && (
+          {(issue.tags?.length ?? 0) > 0 && (
             <>
-              <div className="border-t border-border" />
-              <DetailRow label="Tags" icon={<MdLocalOffer size={13} />}>
+              <div className="border-t border-border/50" />
+              <DetailRow label="Tags" icon={<MdLocalOffer size={12} />}>
                 <div className="flex flex-wrap gap-1 justify-end">
                   {issue.tags.map((tag: string) => (
                     <span
@@ -162,41 +131,83 @@ export const IssueDetailSidebar = ({
         </div>
       </div>
 
-      {(canResolve || canClose) && (
-        <div className="bg-card border border-border rounded-xl p-4 space-y-2">
-          <p className="text-xs font-medium text-muted-foreground mb-3 uppercase tracking-wider">
-            Quick Actions
-          </p>
+      <div className="bg-card border border-border/60 rounded-3xl overflow-hidden shadow-xl shadow-foreground/[0.02]">
+        <SidebarCardHeader icon={<MdSchedule size={16} />} title="Timeline" />
+        <div className="p-6 space-y-4">
+          <DetailRow label="Created" icon={<MdCalendarToday size={12} />}>
+            <div>
+              <p className="text-sm text-foreground">
+                {formatDate(issue.createdAt)}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {formatRelativeTime(issue.createdAt)}
+              </p>
+            </div>
+          </DetailRow>
 
-          {canResolve && (
-            <button
-              onClick={onResolve}
-              className="
-                w-full flex items-center justify-center gap-2
-                px-4 py-2.5 rounded-xl text-sm font-medium
-                bg-green-500/10 text-green-500 border border-green-500/20
-                hover:bg-green-500/20 transition-colors
-              "
-            >
-              <MdCheckCircle size={16} />
-              Mark as Resolved
-            </button>
-          )}
+          <DetailRow label="Updated" icon={<MdCalendarToday size={12} />}>
+            <p className="text-sm text-foreground">
+              {issue.updatedAt ? formatRelativeTime(issue.updatedAt) : "Never"}
+            </p>
+          </DetailRow>
 
-          {canClose && (
-            <button
-              onClick={onClose}
-              className="
-                w-full flex items-center justify-center gap-2
-                px-4 py-2.5 rounded-xl text-sm font-medium
-                bg-secondary text-muted-foreground border border-border
-                hover:text-foreground hover:bg-border transition-colors
-              "
-            >
-              <MdCancel size={16} />
-              Close Issue
-            </button>
+          {issue.resolvedAt && (
+            <DetailRow label="Resolved" icon={<MdCheckCircle size={12} />}>
+              <p className="text-sm text-green-500">
+                {formatDate(issue.resolvedAt)}
+              </p>
+            </DetailRow>
           )}
+        </div>
+      </div>
+
+      <div className="bg-card border border-border/60 rounded-3xl overflow-hidden shadow-xl shadow-foreground/[0.02]">
+        <SidebarCardHeader
+          icon={<MdTrackChanges size={16} />}
+          title="Status Pipeline"
+        />
+        <div className="px-5 py-6">
+          <StatusWorkflow currentStatus={issue.status} />
+        </div>
+      </div>
+
+      {hasActions && (
+        <div className="bg-card border border-border/60 rounded-3xl overflow-hidden shadow-xl shadow-foreground/[0.02]">
+          <SidebarCardHeader
+            icon={<MdBolt size={16} />}
+            title="Quick Actions"
+          />
+          <div className="p-6 space-y-3">
+            {canResolve && (
+              <button
+                onClick={onResolve}
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-green-500/10 text-green-500 border border-green-500/20 hover:bg-green-500/20 transition-colors"
+              >
+                <MdCheckCircle size={16} />
+                Mark as Resolved
+              </button>
+            )}
+
+            {canReopen && (
+              <button
+                onClick={onReopen}
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-blue-500/10 text-blue-500 border border-blue-500/20 hover:bg-blue-500/20 transition-colors"
+              >
+                <MdRefresh size={16} />
+                Reopen Issue
+              </button>
+            )}
+
+            {canClose && (
+              <button
+                onClick={onClose}
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium bg-secondary text-muted-foreground border border-border hover:text-foreground hover:bg-border transition-colors"
+              >
+                <MdCancel size={16} />
+                Close Issue
+              </button>
+            )}
+          </div>
         </div>
       )}
     </div>
