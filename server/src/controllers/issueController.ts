@@ -59,6 +59,7 @@ export const getIssues = async (req: Request, res: Response): Promise<void> => {
     const status = (req.query.status as string) || undefined;
     const priority = (req.query.priority as string) || undefined;
     const severity = (req.query.severity as string) || undefined;
+    const assignee = (req.query.assignee as string) || undefined;
     const sortBy = (req.query.sortBy as string) || "createdAt";
     const order = (req.query.order as string) || "desc";
 
@@ -70,6 +71,11 @@ export const getIssues = async (req: Request, res: Response): Promise<void> => {
     if (status) filter.status = status;
     if (priority) filter.priority = priority;
     if (severity) filter.severity = severity;
+    if (assignee === "__unassigned__") {
+      filter.assignee = null;
+    } else if (assignee) {
+      filter.assignee = assignee;
+    }
 
     const sortOrder = order === "asc" ? 1 : -1;
     const sort: Record<string, 1 | -1> = { [sortBy]: sortOrder };

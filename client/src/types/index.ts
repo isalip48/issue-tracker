@@ -70,6 +70,7 @@ export interface IssueFilters {
   status?: IssueStatus | "";
   priority?: IssuePriority | "";
   severity?: IssueSeverity | "";
+  assignee?: string;
   page?: number;
   limit?: number;
   sortBy?: "createdAt" | "updatedAt" | "priority" | "status";

@@ -42,7 +42,8 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/issues" element={<IssueListPage />} />
+              <Route path="/issues" element={<IssueListPage key="all" />} />
+              <Route path="/issues/me" element={<IssueListPage key="me" presetAssignee="me" />} />
               <Route path="/issues/new" element={<CreateIssuePage />} />
               <Route path="/issues/:id/edit" element={<EditIssuePage />} />
               <Route path="/issues/:id" element={<IssueDetailPage />} />

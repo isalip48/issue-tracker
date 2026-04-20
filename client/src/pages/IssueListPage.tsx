@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { MdAdd, MdBugReport, MdRefresh } from "react-icons/md";
+import { MdAdd, MdBugReport, MdRefresh, MdAssignmentInd } from "react-icons/md";
 import {
   useIssues,
   useDeleteIssue,
@@ -13,12 +13,27 @@ import { DeleteConfirmDialog } from "@/components/issues/DeleteConfirmDialog";
 import { Pagination } from "@/components/shared/Pagination";
 import { SkeletonRow } from "@/components/shared/SkeletonRow";
 import { EmptyState } from "@/components/shared/EmptyState";
+import { useAuthStore } from "@/store/authStore";
 import type { Issue, IssueFilters } from "@/types";
 import { exportToCSV, exportToJSON } from "@/utils";
 import { cn } from "@/lib/utils";
 
-export const IssueListPage = () => {
+interface IssueListPageProps {
+  /** "me" locks the assignee filter to the logged-in user */
+  presetAssignee?: "me";
+}
+
+export const IssueListPage = ({ presetAssignee }: IssueListPageProps) => {
   const navigate = useNavigate();
+  const { user } = useAuthStore();
+
+  const isMyIssues = presetAssignee === "me";
+  // Defensively read either `_id` or the legacy `id` field from the persisted
+  // auth store in case the user logged in before ID serialization was standardized.
+  const myId =
+    user?._id ||
+    (user as unknown as Record<string, string> | null)?.["id"] ||
+    undefined;
 
   const [filters, setFilters] = useState<IssueFilters>({
     page: 1,
@@ -27,9 +42,16 @@ export const IssueListPage = () => {
     order: "desc",
   });
 
+  // Merge the preset on every render so the assignee lock is never stale
+  // even if Zustand hydrates from localStorage after the initial render.
+  const effectiveFilters: IssueFilters =
+    isMyIssues && myId
+      ? { ...filters, assignee: myId }
+      : filters;
+
   const [issueToDelete, setIssueToDelete] = useState<Issue | null>(null);
 
-  const { data, isLoading, isError } = useIssues(filters);
+  const { data, isLoading, isError } = useIssues(effectiveFilters);
   const deleteIssueMutation = useDeleteIssue();
   const updateStatusMutation = useUpdateIssueStatus();
 
@@ -73,14 +95,32 @@ export const IssueListPage = () => {
     toast.success("JSON exported successfully!");
   };
 
+  const hasFilters = effectiveFilters.search || effectiveFilters.status || effectiveFilters.priority;
+
   return (
     <div className="space-y-4 animate-fade-up">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-foreground">All Issues</h2>
-          <p className="text-sm text-muted-foreground mt-0.5">
-            Manage and track all your project issues
-          </p>
+          {isMyIssues ? (
+            <>
+              <div className="flex items-center gap-2 mb-0.5">
+                <MdAssignmentInd size={20} className="text-brand-500" />
+                <h2 className="text-xl font-bold text-foreground">
+                  Assigned to me
+                </h2>
+              </div>
+              <p className="text-sm text-muted-foreground mt-0.5">
+                Issues currently assigned to you
+              </p>
+            </>
+          ) : (
+            <>
+              <h2 className="text-xl font-bold text-foreground">All Issues</h2>
+              <p className="text-sm text-muted-foreground mt-0.5">
+                Manage and track all your project issues
+              </p>
+            </>
+          )}
         </div>
         <button
           onClick={() => navigate("/issues/new")}
@@ -96,11 +136,12 @@ export const IssueListPage = () => {
       </div>
 
       <IssueFiltersBar
-        filters={filters}
+        filters={effectiveFilters}
         onFilterChange={handleFilterChange}
         onExportCSV={handleExportCSV}
         onExportJSON={handleExportJSON}
         totalItems={pagination?.total ?? 0}
+        hideAssigneeFilter={isMyIssues}
       />
 
       <div className="rounded-xl border border-border bg-card overflow-hidden">
@@ -144,19 +185,23 @@ export const IssueListPage = () => {
 
         {!isLoading && !isError && issues.length === 0 && (
           <EmptyState
-            icon={MdBugReport}
+            icon={isMyIssues ? MdAssignmentInd : MdBugReport}
             title={
-              filters.search || filters.status || filters.priority
+              hasFilters
                 ? "No issues match your filters"
-                : "No issues yet"
+                : isMyIssues
+                  ? "No issues assigned to you"
+                  : "No issues yet"
             }
             description={
-              filters.search || filters.status || filters.priority
+              hasFilters
                 ? "Try adjusting your search or clearing the filters"
-                : "Create your first issue to start tracking bugs and tasks"
+                : isMyIssues
+                  ? "You're all caught up! Issues assigned to you will appear here."
+                  : "Create your first issue to start tracking bugs and tasks"
             }
             action={
-              !filters.search && !filters.status && !filters.priority ? (
+              !hasFilters && !isMyIssues ? (
                 <button
                   onClick={() => navigate("/issues/new")}
                   className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity"

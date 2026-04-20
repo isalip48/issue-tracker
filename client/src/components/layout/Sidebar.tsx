@@ -5,6 +5,7 @@ import {
   MdAdd,
   MdSettings,
   MdLogout,
+  MdAssignmentInd,
 } from "react-icons/md";
 import { IoChevronBack } from "react-icons/io5";
 import { useUIStore } from "@/store/uiStore";
@@ -15,6 +16,7 @@ import { cn } from "@/utils";
 const navItems = [
   { to: "/dashboard", icon: MdDashboard, label: "Dashboard" },
   { to: "/issues", icon: MdBugReport, label: "Issues" },
+  { to: "/issues/me", icon: MdAssignmentInd, label: "Assigned to me" },
 ];
 
 export const Sidebar = () => {
