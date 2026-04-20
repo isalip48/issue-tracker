@@ -1,4 +1,10 @@
-import { useState, useRef, useEffect, useLayoutEffect, useCallback } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+} from "react";
 import type { ReactNode, RefObject } from "react";
 import { createPortal } from "react-dom";
 
@@ -60,13 +66,13 @@ export const DropdownOverlay = ({
   return createPortal(
     <div
       ref={portalRef}
-      className="fixed z-[9999] rounded-xl overflow-hidden bg-[#141418] border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.7)] animate-in fade-in zoom-in-95 duration-150"
+      className="fixed z-[9999] rounded-xl overflow-hidden bg-card border border-border shadow-[0_12px_40px_rgba(0,0,0,0.2)] "
       style={{ top: pos.top, left: pos.left, width: pos.width }}
     >
       <div className="max-h-60 overflow-y-auto py-1.5 custom-scrollbar">
         {children}
       </div>
     </div>,
-    document.body
+    document.body,
   );
 };

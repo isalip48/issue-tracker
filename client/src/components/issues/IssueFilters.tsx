@@ -10,7 +10,6 @@ interface IssueFiltersProps {
   onExportCSV: () => void;
   onExportJSON: () => void;
   totalItems: number;
-  /** If true, the assignee filter dropdown is hidden (e.g. "Assigned to me" page) */
   hideAssigneeFilter?: boolean;
 }
 

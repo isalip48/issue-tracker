@@ -1,13 +1,13 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useLayoutEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { IoChevronDown } from "react-icons/io5";
 import { cn } from "@/lib/utils";
 
 const STATUS_CONFIG: Record<string, { label: string; text: string }> = {
-  Open: { label: "Open", text: "text-blue-400" },
-  "In Progress": { label: "In Progress", text: "text-amber-400" },
-  Resolved: { label: "Resolved", text: "text-green-400" },
-  Closed: { label: "Closed", text: "text-slate-500" },
+  Open: { label: "Open", text: "text-blue-500" },
+  "In Progress": { label: "In Progress", text: "text-amber-500" },
+  Resolved: { label: "Resolved", text: "text-green-500" },
+  Closed: { label: "Closed", text: "text-muted-foreground" },
 };
 
 interface StatusSelectProps {
@@ -18,36 +18,46 @@ interface StatusSelectProps {
 export const StatusSelect = ({ value, onChange }: StatusSelectProps) => {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const portalRef = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState({ top: 0, left: 0 });
 
   const config = STATUS_CONFIG[value] ?? STATUS_CONFIG["Open"];
 
-  const [pos, setPos] = useState({ top: 0, left: 0 });
-
-  const updatePosition = () => {
+  const updatePosition = useCallback(() => {
     if (!buttonRef.current) return;
-
     const rect = buttonRef.current.getBoundingClientRect();
-
     setPos({
-      top: rect.bottom + window.scrollY + 6,
+      top: rect.bottom + 6,
       left: rect.left + rect.width / 2,
     });
-  };
+  }, []);
+
+  useLayoutEffect(() => {
+    if (open) {
+      updatePosition();
+      window.addEventListener("scroll", updatePosition, true);
+      window.addEventListener("resize", updatePosition);
+    }
+    return () => {
+      window.removeEventListener("scroll", updatePosition, true);
+      window.removeEventListener("resize", updatePosition);
+    };
+  }, [open, updatePosition]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (buttonRef.current && !buttonRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      if (
+        buttonRef.current &&
+        !buttonRef.current.contains(target) &&
+        (!portalRef.current || !portalRef.current.contains(target))
+      ) {
         setOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  useEffect(() => {
-    if (open) updatePosition();
-  }, [open]);
 
   return (
     <>
@@ -56,12 +66,13 @@ export const StatusSelect = ({ value, onChange }: StatusSelectProps) => {
         type="button"
         onClick={(e) => {
           e.stopPropagation();
+          updatePosition();
           setOpen((o) => !o);
         }}
         className={cn(
           "w-32 flex items-center justify-center gap-1.5",
           "px-2.5 py-1 rounded-full",
-          "border border-white/[0.06] bg-white/[0.02]",
+          "border border-border bg-secondary/50",
           "text-xs font-medium font-mono transition-opacity hover:opacity-80",
           config.text,
         )}
@@ -79,11 +90,8 @@ export const StatusSelect = ({ value, onChange }: StatusSelectProps) => {
       {open &&
         createPortal(
           <div
-            className="
-              fixed z-50 w-32 rounded-xl overflow-hidden
-              bg-[#141418] border border-white/[0.08]
-              shadow-[0_8px_24px_rgba(0,0,0,0.5)]
-            "
+            ref={portalRef}
+            className="fixed z-50 w-32 rounded-xl overflow-hidden bg-card border border-border shadow-[0_8px_24px_rgba(0,0,0,0.15)]"
             style={{
               top: pos.top,
               left: pos.left,
@@ -94,7 +102,8 @@ export const StatusSelect = ({ value, onChange }: StatusSelectProps) => {
               <button
                 key={status}
                 type="button"
-                onClick={(e) => {
+                onMouseDown={(e) => {
+                  e.preventDefault();
                   e.stopPropagation();
                   onChange(status);
                   setOpen(false);
@@ -102,8 +111,8 @@ export const StatusSelect = ({ value, onChange }: StatusSelectProps) => {
                 className={cn(
                   "w-full flex items-center justify-center gap-1.5 px-3 py-2.5",
                   "text-xs font-medium font-mono transition-colors",
-                  "hover:bg-white/[0.04]",
-                  value === status ? cfg.text : "text-slate-400",
+                  "hover:bg-secondary/60",
+                  value === status ? cfg.text : "text-muted-foreground",
                 )}
               >
                 {status}

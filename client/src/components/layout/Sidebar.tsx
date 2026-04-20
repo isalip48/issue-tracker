@@ -16,7 +16,7 @@ import { cn } from "@/utils";
 const navItems = [
   { to: "/dashboard", icon: MdDashboard, label: "Dashboard" },
   { to: "/issues", icon: MdBugReport, label: "Issues" },
-  { to: "/issues/me", icon: MdAssignmentInd, label: "Assigned to me" },
+  { to: "/issues/me", icon: MdAssignmentInd, label: "My Issues" },
 ];
 
 export const Sidebar = () => {

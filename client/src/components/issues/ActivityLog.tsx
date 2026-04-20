@@ -23,7 +23,7 @@ const getActionIcon = (action: string) => {
       bg: "bg-amber-500/10",
     };
   if (action.includes("Closed"))
-    return { icon: MdClose, color: "text-slate-400", bg: "bg-slate-500/10" };
+    return { icon: MdClose, color: "text-muted-foreground", bg: "bg-secondary" };
   if (action.includes("Resolved"))
     return {
       icon: MdCheckCircle,

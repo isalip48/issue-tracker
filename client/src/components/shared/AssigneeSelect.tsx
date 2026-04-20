@@ -97,8 +97,8 @@ export const AssigneeSelect = forwardRef<
             handleSelect("");
           }}
           className={cn(
-            "cursor-pointer px-4 py-2.5 text-sm font-medium transition-colors hover:bg-white/[0.05]",
-            !value ? "text-brand-400 bg-brand-400/5" : "text-slate-400",
+            "cursor-pointer px-4 py-2.5 text-sm font-medium transition-colors hover:bg-secondary/60",
+            !value ? "text-brand-500 bg-secondary/40" : "text-muted-foreground",
           )}
         >
           Unassigned
@@ -111,10 +111,10 @@ export const AssigneeSelect = forwardRef<
               handleSelect(u._id);
             }}
             className={cn(
-              "cursor-pointer flex justify-between items-center px-4 py-2.5 text-sm font-medium transition-colors hover:bg-white/[0.05]",
+              "cursor-pointer flex justify-between items-center px-4 py-2.5 text-sm font-medium transition-colors hover:bg-secondary/60",
               value === u._id
-                ? "text-brand-400 bg-brand-400/5"
-                : "text-slate-300",
+                ? "text-brand-500 bg-secondary/40"
+                : "text-foreground",
             )}
           >
             <span>{u.name}</span>

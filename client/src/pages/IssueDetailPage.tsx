@@ -172,7 +172,7 @@ export const IssueDetailPage = () => {
 
               {issue.description ? (
                 <div
-                  className="prose prose-invert max-w-none text-[15px] leading-[1.75] text-foreground/90 selection:bg-brand-500/30
+                  className="prose dark:prose-invert max-w-none text-[15px] leading-[1.75] text-foreground/90 selection:bg-brand-500/30
                              prose-headings:font-bold prose-headings:tracking-tight prose-a:text-brand-400 prose-a:no-underline hover:prose-a:underline"
                   dangerouslySetInnerHTML={{ __html: issue.description }}
                 />

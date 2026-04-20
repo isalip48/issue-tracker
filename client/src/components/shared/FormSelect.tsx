@@ -91,10 +91,10 @@ export const FormSelect = forwardRef<HTMLSelectElement, FormSelectProps>(
               }}
               className={cn(
                 "w-full flex items-center px-4 py-2.5 text-sm font-medium transition-colors text-left",
-                "hover:bg-white/[0.06]",
+                "hover:bg-secondary/60",
                 value === o
-                  ? "bg-white/[0.04] text-brand-400"
-                  : "text-slate-300 hover:text-slate-100",
+                  ? "bg-secondary/40 text-brand-500"
+                  : "text-foreground hover:text-foreground",
               )}
             >
               {o}

@@ -106,7 +106,7 @@ export const IssueListPage = ({ presetAssignee }: IssueListPageProps) => {
               <div className="flex items-center gap-2 mb-0.5">
                 <MdAssignmentInd size={20} className="text-brand-500" />
                 <h2 className="text-xl font-bold text-foreground">
-                  Assigned to me
+                  My Issues
                 </h2>
               </div>
               <p className="text-sm text-muted-foreground mt-0.5">
