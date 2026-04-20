@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { MdBugReport, MdChevronRight } from "react-icons/md";
-import type { Issue } from "../../types";
-import { StatusBadge } from "../shared/StatusBadge";
-import { PriorityBadge } from "../shared/PriorityBadge";
-import { EmptyState } from "../shared/EmptyState";
-import { SkeletonRow } from "../shared/SkeletonRow";
-import { formatRelativeTime } from "../../utils";
+import type { Issue } from "@/types";
+import { StatusBadge } from "@/components/shared/StatusBadge";
+import { PriorityBadge } from "@/components/shared/PriorityBadge";
+import { EmptyState } from "@/components/shared/EmptyState";
+import { SkeletonRow } from "@/components/shared/SkeletonRow";
+import { formatRelativeTime } from "@/utils";
 
 const PRIORITY_ACCENT: Record<string, string> = {
   Low: "bg-slate-500",

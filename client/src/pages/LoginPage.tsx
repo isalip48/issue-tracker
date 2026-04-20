@@ -1,12 +1,12 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLogin } from "../hooks/useAuth";
-import { FormInput } from "../components/shared/FormInput";
-import { AsyncButton } from "../components/shared/AsyncButton";
-import { loginSchema, type LoginFormData } from "../utils";
-import { AuthLayout } from "../components/layout/AuthLayout";
-import { LoginVisual } from "../components/auth/LoginVisual";
+import { useLogin } from "@/hooks/useAuth";
+import { FormInput } from "@/components/shared/FormInput";
+import { AsyncButton } from "@/components/shared/AsyncButton";
+import { loginSchema, type LoginFormData } from "@/utils";
+import { AuthLayout } from "@/components/layout/AuthLayout";
+import { LoginVisual } from "@/components/auth/LoginVisual";
 
 export const LoginPage = () => {
   const { mutate: login, isPending } = useLogin();

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-import { useUIStore } from "../../store/uiStore";
-import { Sidebar } from "./Sidebar";
-import { Navbar } from "./Navbar";
+import { useUIStore } from "@/store/uiStore";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { Navbar } from "@/components/layout/Navbar";
 
 export const AppLayout = () => {
   const { isSidebarOpen } = useUIStore();

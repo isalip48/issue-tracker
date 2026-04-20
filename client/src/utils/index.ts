@@ -1,7 +1,14 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
-import type { Issue } from "../types";
+import type { Issue } from "@/types";
+
+export const PRIORITY_COLORS = {
+  Low: "#334155",
+  Medium: "#0ea5e9",
+  High: "#6366f1",
+  Critical: "#f43f5e",
+};
 
 export const cn = (...inputs: ClassValue[]): string => {
   return twMerge(clsx(inputs));

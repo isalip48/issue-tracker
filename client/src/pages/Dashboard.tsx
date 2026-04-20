@@ -6,15 +6,13 @@ import {
   MdCheckCircle,
   MdAdd,
 } from "react-icons/md";
-import { useIssueStats, useIssues } from "../hooks/useIssues";
-import { useAuthStore } from "../store/authStore";
-import { StatCard } from "../components/shared/StatCard";
-import { VelocityChart } from "../components/dashboard/VelocityChart";
-import {
-  PriorityChart,
-  PRIORITY_COLORS,
-} from "../components/dashboard/PriorityChart";
-import { RecentIssuesList } from "../components/dashboard/RecentIssuesList";
+import { useIssueStats, useIssues } from "@/hooks/useIssues";
+import { useAuthStore } from "@/store/authStore";
+import { StatCard } from "@/components/shared/StatCard";
+import { VelocityChart } from "@/components/dashboard/VelocityChart";
+import { PriorityChart } from "@/components/dashboard/PriorityChart";
+import { PRIORITY_COLORS } from "@/utils";
+import { RecentIssuesList } from "@/components/dashboard/RecentIssuesList";
 
 const getGreeting = () => {
   const hour = new Date().getHours();

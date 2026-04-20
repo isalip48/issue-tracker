@@ -1,4 +1,4 @@
-import { VisualMockup } from "./VisualMockup";
+import { VisualMockup } from "@/components/auth/VisualMockup";
 
 export const LoginVisual = () => {
   return (

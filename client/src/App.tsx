@@ -1,18 +1,26 @@
 // client/src/App.tsx
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "sonner";
-import { AppLayout } from "./components/layout/AppLayout";
-import { ProtectedRoute } from "./components/shared/ProtectedRoute";
-import { AmbientBlobs } from "./components/shared/AmbientBlobs";
-import { LoginPage } from "./pages/LoginPage";
-import { RegisterPage } from "./pages/RegisterPage";
-import { Dashboard } from "./pages/Dashboard";
-import { IssueListPage } from "./pages/IssueListPage";
-import { CreateIssuePage } from "./pages/CreateIssuePage";
-import { EditIssuePage } from "./pages/EditIssuePage";
-import { IssueDetailPage } from "./pages/IssueDetailPage";
+import { AppLayout } from "@/components/layout/AppLayout";
+import { ProtectedRoute } from "@/components/shared/ProtectedRoute";
+import { AmbientBlobs } from "@/components/shared/AmbientBlobs";
+import { LoginPage } from "@/pages/LoginPage";
+import { RegisterPage } from "@/pages/RegisterPage";
+import { Dashboard } from "@/pages/Dashboard";
+import { IssueListPage } from "@/pages/IssueListPage";
+import { CreateIssuePage } from "@/pages/CreateIssuePage";
+import { EditIssuePage } from "@/pages/EditIssuePage";
+import { IssueDetailPage } from "@/pages/IssueDetailPage";
+import { useUIStore } from "@/store/uiStore";
 
 function App() {
+  const { isDarkMode } = useUIStore();
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", isDarkMode);
+  }, [isDarkMode]);
+
   return (
     <>
       {/* Global ambient backdrop — dot-grid + glow blobs over the entire app */}

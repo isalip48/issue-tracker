@@ -1,5 +1,5 @@
-import type { IssuePriority } from "../../types";
-import { cn } from "../../lib/utils";
+import type { IssuePriority } from "@/types";
+import { cn } from "@/lib/utils";
 
 interface PriorityBadgeProps {
   priority: IssuePriority | string;

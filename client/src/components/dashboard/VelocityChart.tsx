@@ -7,7 +7,7 @@ import {
   Area,
 } from "recharts";
 import { MdBugReport } from "react-icons/md";
-import { EmptyState } from "../shared/EmptyState";
+import { EmptyState } from "@/components/shared/EmptyState";
 
 const CustomTooltip = ({
   active,

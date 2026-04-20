@@ -3,11 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   MdEdit,
   MdDelete,
-  MdArrowBack,
   MdTitle,
   MdDescription,
   MdLabel,
-  MdInfo,
 } from "react-icons/md";
 
 import { useIssue, useUpdateIssue, useDeleteIssue } from "@/hooks/useIssues";

@@ -7,10 +7,10 @@ import {
   MdLogout,
 } from "react-icons/md";
 import { IoChevronBack } from "react-icons/io5";
-import { useUIStore } from "../../store/uiStore";
-import { useAuthStore } from "../../store/authStore";
-import { Logo } from "../shared/Logo";
-import { cn } from "../../utils";
+import { useUIStore } from "@/store/uiStore";
+import { useAuthStore } from "@/store/authStore";
+import { Logo } from "@/components/shared/Logo";
+import { cn } from "@/utils";
 
 const navItems = [
   { to: "/dashboard", icon: MdDashboard, label: "Dashboard" },

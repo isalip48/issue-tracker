@@ -5,10 +5,10 @@ import {
   MdLocalOffer,
   MdCancel,
 } from "react-icons/md";
-import { StatusBadge } from "../shared/StatusBadge";
-import { PriorityBadge } from "../shared/PriorityBadge";
-import { formatDate, formatRelativeTime } from "../../utils";
-import type { Issue } from "../../types";
+import { StatusBadge } from "@/components/shared/StatusBadge";
+import { PriorityBadge } from "@/components/shared/PriorityBadge";
+import { formatDate, formatRelativeTime } from "@/utils";
+import type { Issue } from "@/types";
 
 const DetailRow = ({
   label,
@@ -78,9 +78,9 @@ export const IssueDetailSidebar = ({
   return (
     <div className="space-y-4 lg:sticky lg:top-6 self-start">
       <div className="bg-card border border-border rounded-xl overflow-hidden">
-        <div className="px-5 py-3 border-b border-border bg-secondary/20">
+        {/* <div className="px-5 py-3 border-b border-border bg-secondary/20">
           <h2 className="text-sm font-semibold text-foreground">Details</h2>
-        </div>
+        </div> */}
 
         <div className="px-5 py-4 space-y-4">
           <DetailRow label="Status">

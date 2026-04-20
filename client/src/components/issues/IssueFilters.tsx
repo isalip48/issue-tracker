@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { MdSearch, MdFilterList } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
-import type { IssueFilters as FilterType } from "../../types";
+import type { IssueFilters as FilterType } from "@/types";
 
 interface IssueFiltersProps {
   filters: FilterType;

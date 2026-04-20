@@ -1,14 +1,6 @@
 import { Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import { MdBugReport } from "react-icons/md";
-import { EmptyState } from "../shared/EmptyState";
-
-// ── Chart Colors ──────────────────────────────────────────────────────────────
-export const PRIORITY_COLORS = {
-  Low: "#334155",
-  Medium: "#0ea5e9",
-  High: "#6366f1",
-  Critical: "#f43f5e",
-};
+import { EmptyState } from "@/components/shared/EmptyState";
 
 // ── Custom Tooltip ────────────────────────────────────────────────────────────
 const CustomTooltip = ({

@@ -1,5 +1,5 @@
 import { MdWarning } from "react-icons/md";
-import { LoadingSpinner } from "../shared/LoadingSpinner";
+import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 
 interface DeleteConfirmDialogProps {
   isOpen: boolean;

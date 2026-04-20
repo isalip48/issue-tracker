@@ -1,10 +1,10 @@
-import api from "./axios";
+import api from "@/api/axios";
 import type {
   LoginCredentials,
   RegisterCredentials,
   APIResponse,
   User,
-} from "../types";
+} from "@/types";
 
 interface AuthResponse {
   user:         User;

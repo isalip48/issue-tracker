@@ -1,6 +1,6 @@
 import { type ButtonHTMLAttributes } from "react";
-import { cn } from "../../lib/utils";
-import { LoadingSpinner } from "./LoadingSpinner";
+import { cn } from "@/lib/utils";
+import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 
 interface AsyncButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;

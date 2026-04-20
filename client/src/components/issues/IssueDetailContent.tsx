@@ -1,4 +1,4 @@
-import { ActivityLog } from "./ActivityLog";
+import { ActivityLog } from "@/components/issues/ActivityLog";
 
 interface IssueDetailContentProps {
   description: string;

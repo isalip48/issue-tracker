@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { IoChevronDown } from "react-icons/io5";
-import { cn } from "../../lib/utils";
+import { cn } from "@/lib/utils";
 
 const STATUS_CONFIG: Record<string, { label: string; text: string }> = {
   Open: { label: "Open", text: "text-blue-400" },

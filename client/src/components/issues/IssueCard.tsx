@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { MdEdit, MdDelete } from "react-icons/md";
-import type { Issue } from "../../types";
-import { PriorityBadge } from "../shared/PriorityBadge";
-import { StatusSelect } from "../shared/StatusSelect";
-import { formatRelativeTime } from "../../utils";
-import { cn } from "../../lib/utils";
+import type { Issue } from "@/types";
+import { PriorityBadge } from "@/components/shared/PriorityBadge";
+import { StatusSelect } from "@/components/shared/StatusSelect";
+import { formatRelativeTime } from "@/utils";
+import { cn } from "@/lib/utils";
 
 interface IssueCardProps {
   issue: Issue;

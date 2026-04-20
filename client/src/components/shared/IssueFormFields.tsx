@@ -1,9 +1,8 @@
-// client/src/components/issues/IssueFormFields.tsx
 import { Controller, useFormContext } from "react-hook-form";
 import { TipTapEditor } from "@/components/issues/TipTapEditor";
 import { TagInput } from "@/components/issues/TagInput";
-import { FormSelect } from "../shared/FormSelect";
-import type { IssueFormData } from "../../utils";
+import { FormSelect } from "@/components/shared/FormSelect";
+import type { IssueFormData } from "@/utils";
 import { MdDescription, MdFlag, MdLabel, MdTitle } from "react-icons/md";
 
 const STATUSES = ["Open", "In Progress", "Resolved", "Closed"];
@@ -35,7 +34,7 @@ export const IssueFormFields = () => {
             />
             {errors.title && (
               <p className="text-xs font-medium text-red-500 flex items-center gap-1">
-                <span>⚠</span> {errors.title.message}
+                 {errors.title.message}
               </p>
             )}
           </div>

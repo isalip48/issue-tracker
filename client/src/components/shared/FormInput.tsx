@@ -1,6 +1,6 @@
 import { forwardRef, type InputHTMLAttributes, useState } from "react";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
-import { cn } from "../../utils";
+import { cn } from "@/utils";
 
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;

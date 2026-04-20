@@ -6,15 +6,15 @@ import {
   useIssues,
   useDeleteIssue,
   useUpdateIssueStatus,
-} from "../hooks/useIssues";
-import { IssueFiltersBar } from "../components/issues/IssueFilters";
-import { IssueCard } from "../components/issues/IssueCard";
-import { DeleteConfirmDialog } from "../components/issues/DeleteConfirmDialog";
-import { Pagination } from "../components/shared/Pagination";
-import { SkeletonRow } from "../components/shared/SkeletonRow";
-import { EmptyState } from "../components/shared/EmptyState";
-import type { Issue, IssueFilters } from "../types";
-import { exportToCSV, exportToJSON } from "../utils";
+} from "@/hooks/useIssues";
+import { IssueFiltersBar } from "@/components/issues/IssueFilters";
+import { IssueCard } from "@/components/issues/IssueCard";
+import { DeleteConfirmDialog } from "@/components/issues/DeleteConfirmDialog";
+import { Pagination } from "@/components/shared/Pagination";
+import { SkeletonRow } from "@/components/shared/SkeletonRow";
+import { EmptyState } from "@/components/shared/EmptyState";
+import type { Issue, IssueFilters } from "@/types";
+import { exportToCSV, exportToJSON } from "@/utils";
 import { cn } from "@/lib/utils";
 
 export const IssueListPage = () => {

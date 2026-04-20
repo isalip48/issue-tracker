@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useAuthStore } from "../store/authStore";
+import { useAuthStore } from "@/store/authStore";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
@@ -23,7 +23,7 @@ api.interceptors.request.use(
 
 let isRefreshing = false;
 
-let failedQueue: Array<{
+const failedQueue: Array<{
   resolve: (token: string) => void;
   reject: (error: unknown) => void;
 }> = [];
@@ -36,6 +36,7 @@ const processQueue = (error: unknown, token: string | null = null) => {
       promise.resolve(token!);
     }
   });
+  failedQueue.length = 0;
 };
 
 api.interceptors.response.use(

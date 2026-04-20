@@ -2,12 +2,14 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useIssue, useUpdateIssue } from "../hooks/useIssues";
+import { useIssue, useUpdateIssue } from "@/hooks/useIssues";
 import { IssueFormFields } from "@/components/shared/IssueFormFields";
-import { StatusBadge } from "../components/shared/StatusBadge";
-import { issueFormSchema, type IssueFormData } from "../utils";
+import { StatusBadge } from "@/components/shared/StatusBadge";
+import { issueFormSchema, type IssueFormData } from "@/utils";
 import { SubmitButton } from "@/components/shared/SubmitButton";
 import { PageHeader } from "@/components/shared/PageHeader";
+import { IssueSkeleton } from "@/components/shared/IssueSkeleton";
+import { NotFoundState } from "@/components/shared/NotFoundState";
 
 export const EditIssuePage = () => {
   const { id } = useParams<{ id: string }>();
@@ -53,11 +55,11 @@ export const EditIssuePage = () => {
     );
   };
 
-  if (isLoading) return <EditSkeleton />;
+  if (isLoading) return <IssueSkeleton />;
 
   if (!issue)
     return (
-      <NotFound message="Issue not found" onBack={() => navigate("/issues")} />
+      <NotFoundState message="Issue not found" onBack={() => navigate("/issues")} />
     );
 
   return (
@@ -120,31 +122,3 @@ export const EditIssuePage = () => {
   );
 };
 
-const EditSkeleton = () => (
-  <div className="max-w-3xl mx-auto space-y-6 animate-pulse">
-    <div className="h-10 w-48 bg-muted rounded-lg" />
-    <div className="bg-card border border-border rounded-xl p-6 space-y-4">
-      <div className="h-6 w-24 bg-muted rounded" />
-      <div className="h-10 bg-muted rounded-lg" />
-      <div className="h-48 bg-muted rounded-xl" />
-    </div>
-  </div>
-);
-
-const NotFound = ({
-  message,
-  onBack,
-}: {
-  message: string;
-  onBack: () => void;
-}) => (
-  <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
-    <p className="text-muted-foreground">{message}</p>
-    <button
-      onClick={onBack}
-      className="px-4 py-2 rounded-lg bg-secondary text-sm font-medium hover:bg-border transition-colors"
-    >
-      Go back
-    </button>
-  </div>
-);

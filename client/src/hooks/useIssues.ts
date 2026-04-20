@@ -4,8 +4,8 @@ import {
   issuesApi,
   type CreateIssueData,
   type UpdateIssueData,
-} from "../api/issues";
-import type { IssueFilters } from "../types";
+} from "@/api/issues";
+import type { IssueFilters } from "@/types";
 
 export const issueKeys = {
   all: () => ["issues"] as const,

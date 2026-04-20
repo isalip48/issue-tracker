@@ -1,6 +1,6 @@
 import { MdDarkMode, MdLightMode, MdNotifications } from "react-icons/md";
-import { useUIStore } from "../../store/uiStore";
-import { useAuthStore } from "../../store/authStore";
+import { useUIStore } from "@/store/uiStore";
+import { useAuthStore } from "@/store/authStore";
 
 export const Navbar = () => {
   const { isDarkMode, toggleDarkMode, isSidebarOpen } = useUIStore();

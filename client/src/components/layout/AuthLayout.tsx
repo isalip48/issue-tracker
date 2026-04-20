@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { cn } from "../../utils";
-import { Logo } from "../shared/Logo";
+import { cn } from "@/utils";
+import { Logo } from "@/components/shared/Logo";
 
 interface AuthLayoutProps {
   leftHeadline: React.ReactNode;

@@ -1,10 +1,10 @@
-import api from "./axios";
+import api from "@/api/axios";
 import type {
   Issue,
   IssueFilters,
   APIResponse,
   PaginatedResponse,
-} from "../types";
+} from "@/types";
 
 export interface IssueStats {
   total: number;
@@ -36,7 +36,7 @@ export interface CreateIssueData {
   assignee?: string;
 }
 
-export interface UpdateIssueData extends Partial<CreateIssueData> {}
+export type UpdateIssueData = Partial<CreateIssueData>;
 
 export const issuesApi = {
   getAll: async (

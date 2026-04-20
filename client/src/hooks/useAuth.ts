@@ -1,9 +1,9 @@
 // client/src/hooks/useAuth.ts
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { authApi } from "../api/auth";
-import { useAuthStore } from "../store/authStore";
-import type { LoginCredentials, RegisterCredentials } from "../types";
+import { authApi } from "@/api/auth";
+import { useAuthStore } from "@/store/authStore";
+import type { LoginCredentials, RegisterCredentials } from "@/types";
 
 export const useLogin = () => {
   const { setAuth } = useAuthStore();

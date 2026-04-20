@@ -1,6 +1,6 @@
 
-import { useIssueActivity } from "../../hooks/useIssues";
-import { formatRelativeTime } from "../../utils";
+import { useIssueActivity } from "@/hooks/useIssues";
+import { formatRelativeTime } from "@/utils";
 import {
   MdEdit,
   MdAdd,
@@ -33,6 +33,14 @@ const getActionIcon = (action: string) => {
   return { icon: MdEdit, color: "text-blue-400", bg: "bg-blue-500/10" };
 };
 
+interface Activity {
+  _id: string;
+  action: string;
+  user: string | { name: string };
+  timestamp: string;
+  changes?: Record<string, { from: unknown; to: unknown }>;
+}
+
 export const ActivityLog = ({ issueId }: ActivityLogProps) => {
   const { data, isLoading } = useIssueActivity(issueId);
   const activities = data?.data?.activity ?? [];
@@ -63,7 +71,7 @@ export const ActivityLog = ({ issueId }: ActivityLogProps) => {
 
   return (
     <div className="space-y-1">
-      {activities.map((activity: any, index: number) => {
+      {activities.map((activity: Activity, index: number) => {
         const { icon: Icon, color, bg } = getActionIcon(activity.action);
         const isLast = index === activities.length - 1;
 

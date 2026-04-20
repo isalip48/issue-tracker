@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRegister } from "../hooks/useAuth";
-import { FormInput } from "../components/shared/FormInput";
-import { AsyncButton } from "../components/shared/AsyncButton";
-import { registerSchema, type RegisterFormData } from "../utils";
-import { AuthLayout } from "../components/layout/AuthLayout";
-import { RegisterVisual } from "../components/auth/RegisterVisual";
+import { useRegister } from "@/hooks/useAuth";
+import { FormInput } from "@/components/shared/FormInput";
+import { AsyncButton } from "@/components/shared/AsyncButton";
+import { registerSchema, type RegisterFormData } from "@/utils";
+import { AuthLayout } from "@/components/layout/AuthLayout";
+import { RegisterVisual } from "@/components/auth/RegisterVisual";
 
 export const RegisterPage = () => {
   const { mutate: registerMutation, isPending } = useRegister();
@@ -15,13 +15,17 @@ export const RegisterPage = () => {
   const {
     register: field,
     handleSubmit,
-    watch,
+    control,
     formState: { errors },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
   });
 
-  const password = watch("password", "");
+  const password = useWatch({
+    control,
+    name: "password",
+    defaultValue: "",
+  });
 
   const getStrength = (pw: string): number => {
     let s = 0;
@@ -53,7 +57,11 @@ export const RegisterPage = () => {
   };
 
   const onSubmit = (data: RegisterFormData) => {
-    const { confirmPassword: _, ...credentials } = data;
+    const credentials = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    };
     registerMutation(credentials, {
       onSuccess: () => navigate("/dashboard", { replace: true }),
     });
