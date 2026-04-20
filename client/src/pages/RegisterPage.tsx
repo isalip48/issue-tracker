@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm, useWatch, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRegister } from "@/hooks/useAuth";
 import { FormInput } from "@/components/shared/FormInput";
@@ -7,6 +7,35 @@ import { AsyncButton } from "@/components/shared/AsyncButton";
 import { registerSchema, type RegisterFormData } from "@/utils";
 import { AuthLayout } from "@/components/layout/AuthLayout";
 import { RegisterVisual } from "@/components/auth/RegisterVisual";
+import { MdAdminPanelSettings, MdCode, MdBugReport, MdPeople } from "react-icons/md";
+import { cn } from "@/lib/utils";
+
+const ROLES = [
+  {
+    value: "Admin",
+    label: "Admin",
+    icon: MdAdminPanelSettings,
+    description: "Full access, manage users and settings",
+  },
+  {
+    value: "QA",
+    label: "QA",
+    icon: MdBugReport,
+    description: "Test, verify, and validate issue resolutions",
+  },
+  {
+    value: "Developer",
+    label: "Developer",
+    icon: MdCode,
+    description: "Create, edit, and resolve issues",
+  },
+  {
+    value: "Other",
+    label: "Other",
+    icon: MdPeople,
+    description: "General access for other team members",
+  },
+];
 
 export const RegisterPage = () => {
   const { mutate: registerMutation, isPending } = useRegister();
@@ -19,13 +48,10 @@ export const RegisterPage = () => {
     formState: { errors },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
+    defaultValues: { role: "Developer" },
   });
 
-  const password = useWatch({
-    control,
-    name: "password",
-    defaultValue: "",
-  });
+  const password = useWatch({ control, name: "password", defaultValue: "" });
 
   const getStrength = (pw: string): number => {
     let s = 0;
@@ -50,21 +76,18 @@ export const RegisterPage = () => {
       bgClass: "bg-emerald-500",
       textClass: "text-emerald-500",
     },
-  ][strength] || {
-    label: "",
-    bgClass: "bg-border",
-    textClass: "text-transparent",
-  };
+  ][strength] || { label: "", bgClass: "bg-border", textClass: "text-transparent" };
 
   const onSubmit = (data: RegisterFormData) => {
-    const credentials = {
-      name: data.name,
-      email: data.email,
-      password: data.password,
-    };
-    registerMutation(credentials, {
-      onSuccess: () => navigate("/dashboard", { replace: true }),
-    });
+    registerMutation(
+      {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        role: data.role,
+      },
+      { onSuccess: () => navigate("/dashboard", { replace: true }) }
+    );
   };
 
   const leftBottomContent = (
@@ -167,6 +190,54 @@ export const RegisterPage = () => {
             error={errors.confirmPassword?.message}
             {...field("confirmPassword")}
           />
+        </div>
+
+        {/* Role selector */}
+        <div>
+          <label className="block text-[11px] font-medium tracking-[0.05em] uppercase mb-2 text-muted-foreground">
+            Role
+          </label>
+          <Controller
+            name="role"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <div className="grid grid-cols-4 gap-2">
+                {ROLES.map(({ value: rv, label, icon: Icon, description }) => {
+                  const isSelected = value === rv;
+                  return (
+                    <button
+                      key={rv}
+                      type="button"
+                      onClick={() => onChange(rv)}
+                      className={cn(
+                        "flex flex-col items-center gap-1.5 px-2 py-3 rounded-xl border text-center transition-all duration-200",
+                        isSelected
+                          ? "border-primary/60 bg-primary/10 text-primary shadow-[0_0_12px_rgba(99,102,241,0.15)]"
+                          : "border-border bg-secondary/40 text-muted-foreground hover:border-border/80 hover:bg-secondary/60",
+                      )}
+                      title={description}
+                    >
+                      <Icon
+                        size={18}
+                        className={cn(
+                          "transition-colors",
+                          isSelected ? "text-primary" : "text-muted-foreground",
+                        )}
+                      />
+                      <span className="text-[11px] font-semibold tracking-wide">
+                        {label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          />
+          {errors.role && (
+            <p className="text-[10px] text-red-500 mt-1.5 font-medium">
+              {errors.role.message}
+            </p>
+          )}
         </div>
 
         <AsyncButton type="submit" isLoading={isPending} className="mt-6">

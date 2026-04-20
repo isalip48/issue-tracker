@@ -4,7 +4,7 @@ export type IssuePriority = "Low" | "Medium" | "High" | "Critical";
 
 export type IssueSeverity = "Minor" | "Major" | "Critical" | "Blocker";
 
-export type UserRole = "Admin" | "Developer" | "Viewer";
+export type UserRole = "Admin" | "QA" | "Developer" | "Other";
 
 export interface User {
   _id: string;
@@ -89,4 +89,5 @@ export interface LoginCredentials {
 
 export interface RegisterCredentials extends LoginCredentials {
   name: string;
+  role?: string;
 }

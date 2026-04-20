@@ -4,6 +4,7 @@ import type { Issue } from "@/types";
 import { PriorityBadge } from "@/components/shared/PriorityBadge";
 import { StatusSelect } from "@/components/shared/StatusSelect";
 import { formatRelativeTime } from "@/utils";
+import { useAuthStore } from "@/store/authStore";
 import { cn } from "@/lib/utils";
 
 interface IssueCardProps {
@@ -18,8 +19,16 @@ export const IssueCard = ({
   onStatusChange,
 }: IssueCardProps) => {
   const navigate = useNavigate();
-  const assignee = issue.assignee as { name?: string } | undefined;
+  const { user } = useAuthStore();
+
+  const assignee = issue.assignee as { _id?: string; name?: string } | undefined;
+  const reporter = issue.reporter as { _id?: string; name?: string } | undefined;
   const assigneeName = assignee?.name;
+
+  const isAdmin = user?.role?.toLowerCase() === "admin";
+  const isReporter = reporter?._id === user?._id;
+  const isAssignee = assignee?._id === user?._id;
+  const canDelete = isAdmin || isReporter || isAssignee;
 
   return (
     <div
@@ -41,7 +50,7 @@ export const IssueCard = ({
           <span className="opacity-30">•</span>
           <span>{formatRelativeTime(issue.createdAt)}</span>
           <span className="opacity-30">•</span>
-          <span>{issue.reporter?.name || "Anonymous"}</span>
+          <span>{reporter?.name || "Anonymous"}</span>
           {issue.tags?.length > 0 && (
             <>
               <span className="opacity-30">•</span>
@@ -97,13 +106,15 @@ export const IssueCard = ({
         >
           <MdEdit size={16} />
         </button>
-        <button
-          onClick={() => onDelete(issue)}
-          className="p-1.5 rounded-lg text-muted-foreground hover:text-rose-500 hover:bg-rose-500/10 transition-colors"
-          title="Delete"
-        >
-          <MdDelete size={16} />
-        </button>
+        {canDelete && (
+          <button
+            onClick={() => onDelete(issue)}
+            className="p-1.5 rounded-lg text-muted-foreground hover:text-rose-500 hover:bg-rose-500/10 transition-colors"
+            title="Delete"
+          >
+            <MdDelete size={16} />
+          </button>
+        )}
       </div>
     </div>
   );

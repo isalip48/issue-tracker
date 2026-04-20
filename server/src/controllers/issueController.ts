@@ -214,13 +214,29 @@ export const deleteIssue = async (
       return;
     }
 
-    const issue = await Issue.findByIdAndDelete(id);
+    const issue = await Issue.findById(id);
 
     if (!issue) {
       res.status(404).json({ success: false, message: "Issue not found" });
       return;
     }
 
+    const requesterId = req.user!.userId;
+    const requesterRole = req.user!.role;
+
+    const isAdmin = requesterRole === "admin";
+    const isReporter = issue.reporter?.toString() === requesterId;
+    const isAssignee = issue.assignee?.toString() === requesterId;
+
+    if (!isAdmin && !isReporter && !isAssignee) {
+      res.status(403).json({
+        success: false,
+        message: "Only an Admin, the reporter, or the assignee can delete this issue.",
+      });
+      return;
+    }
+
+    await issue.deleteOne();
     await ActivityLog.deleteMany({ issue: id });
 
     res.status(200).json({

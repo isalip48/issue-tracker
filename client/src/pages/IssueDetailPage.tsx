@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { MdEdit, MdDelete, MdDescription, MdPerson } from "react-icons/md";
 
 import { useIssue, useUpdateIssue, useDeleteIssue } from "@/hooks/useIssues";
+import { useAuthStore } from "@/store/authStore";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import { PriorityBadge } from "@/components/shared/PriorityBadge";
 import { IssueDetailSidebar } from "@/components/issues/IssueDetailSidebar";
@@ -27,6 +28,7 @@ export const IssueDetailPage = () => {
   const { data: issueData, isLoading, isError } = useIssue(id ?? "");
   const updateMutation = useUpdateIssue();
   const deleteMutation = useDeleteIssue();
+  const { user } = useAuthStore();
   const issue = issueData?.data?.issue;
 
   if (!id) {
@@ -115,14 +117,24 @@ export const IssueDetailPage = () => {
               <MdEdit size={16} className="text-blue-500" />
               Edit
             </button>
-            <button
-              onClick={() => setDeleteDialog(true)}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium text-red-500 bg-red-500/5 border border-red-500/20 hover:bg-red-500/10 transition-all"
-              title="Delete Issue"
-            >
-              <MdDelete size={16} />
-              Delete
-            </button>
+            {(() => {
+              const assignee = issue.assignee as { _id?: string } | undefined;
+              const reporter = issue.reporter as { _id?: string } | undefined;
+              const isAdmin = user?.role?.toLowerCase() === "admin";
+              const isReporter = reporter?._id === user?._id;
+              const isAssignee = assignee?._id === user?._id;
+              const canDelete = isAdmin || isReporter || isAssignee;
+              return canDelete ? (
+                <button
+                  onClick={() => setDeleteDialog(true)}
+                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium text-red-500 bg-red-500/5 border border-red-500/20 hover:bg-red-500/10 transition-all"
+                  title="Delete Issue"
+                >
+                  <MdDelete size={16} />
+                  Delete
+                </button>
+              ) : null;
+            })()}
           </div>
         }
       />
