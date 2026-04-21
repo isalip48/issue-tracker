@@ -79,4 +79,4 @@ jobs:
         run: docker build -t issue-tracker-server ./server
 
       - name: Build client image
-        run: docker build --build-arg VITE_API_URL=http://localhost:5000/api -t issue-tracker-client ./client
+        run: docker build --build-arg VITE_API_URL=http://localhost:5000/api -f client/Dockerfile -t issue-tracker-client .
