@@ -43,6 +43,7 @@ app.get("/api/health", (_req, res) => {
   res.json({
     success: true,
     message: "Issue Tracker API is running",
+    features: ["auth", "issues", "users", "projects"],
     environment: process.env.NODE_ENV || "development",
   });
 });
