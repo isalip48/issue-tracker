@@ -121,8 +121,8 @@ export const Dashboard = () => {
           iconBg="bg-amber-500/10"
         />
         <StatCard
-          title="Resolved"
-          value={stats?.byStatus.Resolved ?? stats?.byStatus.Closed ?? 0}
+          title="Closed"
+          value={stats?.byStatus.Closed ?? 0}
           icon={MdCheckCircle}
           iconColor="text-green-500"
           iconBg="bg-green-500/10"

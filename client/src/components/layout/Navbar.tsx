@@ -1,8 +1,14 @@
-import { MdDarkMode, MdLightMode, MdNotifications } from "react-icons/md";
+import { MdDarkMode, MdLightMode, MdKeyboard } from "react-icons/md";
 import { useUIStore } from "@/store/uiStore";
 import { useAuthStore } from "@/store/authStore";
 
-export const Navbar = () => {
+interface NavbarProps {
+  onOpenShortcuts?: () => void;
+}
+
+export const Navbar = ({
+  onOpenShortcuts,
+}: NavbarProps) => {
   const { isDarkMode, toggleDarkMode, isSidebarOpen } = useUIStore();
   const { user } = useAuthStore();
 
@@ -12,17 +18,15 @@ export const Navbar = () => {
       style={{ left: isSidebarOpen ? "256px" : "72px" }}
     >
       <div className="flex items-center gap-1">
-        <button
-          className="p-2.5 rounded-xl text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors relative group"
-          aria-label="Notifications"
-        >
-          <MdNotifications
-            size={20}
-            className="group-hover:scale-110 transition-transform"
-          />
-          <span className="absolute top-2 right-2.5 w-2 h-2 bg-primary rounded-full shadow-[0_0_8px_rgba(99,102,241,0.8)] animate-pulse" />
-        </button>
-
+        {onOpenShortcuts && (
+          <button
+            onClick={onOpenShortcuts}
+            className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+            title="Keyboard shortcuts (?)"
+          >
+            <MdKeyboard size={18} />
+          </button>
+        )}
         <button
           onClick={toggleDarkMode}
           className="p-2.5 rounded-xl text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors group"
