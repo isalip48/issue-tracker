@@ -7,12 +7,10 @@ export const NotFoundPage = () => {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
       <div className="text-center max-w-md animate-fade-up">
-        {/* Icon */}
         <div className="w-20 h-20 rounded-2xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center mx-auto mb-6">
           <MdBugReport className="text-brand-500" size={36} />
         </div>
 
-        {/* Heading */}
         <h1 className="text-7xl font-black text-foreground mb-2 tracking-tight">
           404
         </h1>
@@ -23,7 +21,6 @@ export const NotFoundPage = () => {
           The page you're looking for doesn't exist or has been moved.
         </p>
 
-        {/* Actions */}
         <div className="flex items-center justify-center gap-3">
           <button
             onClick={() => navigate(-1)}

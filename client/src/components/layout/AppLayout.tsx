@@ -48,23 +48,25 @@ export const AppLayout = () => {
           <Outlet />
         </main>
 
-        <div className="px-6 py-2 border-t border-border">
-          <p className="text-[10px] text-muted-foreground flex items-center gap-1.5">
-            Press
-            <kbd className="px-1.5 py-0.5 rounded bg-secondary border border-border font-mono">
-              Ctrl H
-            </kbd>
-            for keyboard shortcuts ·
-            <kbd className="px-1.5 py-0.5 rounded bg-secondary border border-border font-mono">
-              Ctrl I
-            </kbd>
-            to create issue ·
-            <kbd className="px-1.5 py-0.5 rounded bg-secondary border border-border font-mono">
-              Ctrl K
-            </kbd>
-            to search
-          </p>
-        </div>
+        {location.pathname !== "/settings" && (
+          <div className="px-8 -mt-6">
+            <p className="text-[8px] text-muted-foreground flex items-center gap-1.5">
+              Press
+              <kbd className="px-1.5 py-0.5 rounded bg-secondary border border-border font-mono">
+                Ctrl H
+              </kbd>
+              for keyboard shortcuts ·
+              <kbd className="px-1.5 py-0.5 rounded bg-secondary border border-border font-mono">
+                Ctrl I
+              </kbd>
+              to create issue ·
+              <kbd className="px-1.5 py-0.5 rounded bg-secondary border border-border font-mono">
+                Ctrl K
+              </kbd>
+              to search
+            </p>
+          </div>
+        )}
       </div>
       <CommandPalette
         isOpen={commandPaletteOpen}

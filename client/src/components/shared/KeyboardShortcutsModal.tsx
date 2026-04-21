@@ -36,7 +36,6 @@ export const KeyboardShortcutsModal = ({
         "
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-border">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg bg-brand-500/10 flex items-center justify-center">
@@ -54,7 +53,6 @@ export const KeyboardShortcutsModal = ({
           </button>
         </div>
 
-        {/* Shortcuts list */}
         <div className="p-5 space-y-2">
           {SHORTCUT_DEFINITIONS.map((shortcut) => (
             <div

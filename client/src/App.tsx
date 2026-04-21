@@ -25,7 +25,6 @@ function App() {
 
   return (
     <>
-      {/* Global ambient backdrop — dot-grid + glow blobs over the entire app */}
       <AmbientBlobs />
 
       <BrowserRouter>
@@ -36,11 +35,9 @@ function App() {
           duration={3000}
         />
         <Routes>
-          {/* Public */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 
-          {/* Protected */}
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />

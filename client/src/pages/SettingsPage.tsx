@@ -1,15 +1,10 @@
 // client/src/pages/SettingsPage.tsx
-import {
-  MdDarkMode,
-  MdLightMode,
-  MdLogout,
-} from "react-icons/md";
+import { MdDarkMode, MdLightMode, MdLogout } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useUIStore } from "../store/uiStore";
 import { useAuthStore } from "../store/authStore";
 import { SHORTCUT_DEFINITIONS } from "../hooks/useKeyboardShortcuts";
 
-// ── Reusable section wrapper ──────────────────────────────────────────────────
 const Section = ({
   title,
   description,
@@ -28,7 +23,6 @@ const Section = ({
   </div>
 );
 
-// ── Setting row ───────────────────────────────────────────────────────────────
 const SettingRow = ({
   icon,
   label,
@@ -54,7 +48,6 @@ const SettingRow = ({
   </div>
 );
 
-// ── Toggle Switch ─────────────────────────────────────────────────────────────
 const Toggle = ({
   checked,
   onChange,
@@ -91,7 +84,6 @@ export const SettingsPage = () => {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6 animate-fade-up">
-      {/* ── Page Header ─────────────────────────────────────────── */}
       <div>
         <h1 className="text-xl font-bold text-foreground">Settings</h1>
         <p className="text-sm text-muted-foreground mt-1">
@@ -99,10 +91,8 @@ export const SettingsPage = () => {
         </p>
       </div>
 
-      {/* ── Profile Section ─────────────────────────────────────── */}
       <Section title="Profile" description="Your account information">
         <div className="flex items-center gap-4">
-          {/* Avatar */}
           <div className="w-14 h-14 rounded-full bg-brand-500 text-white flex items-center justify-center text-xl font-bold shrink-0">
             {user?.name?.charAt(0).toUpperCase()}
           </div>
@@ -118,7 +108,6 @@ export const SettingsPage = () => {
         </div>
       </Section>
 
-      {/* ── Appearance Section ───────────────────────────────────── */}
       <Section title="Appearance" description="Customize how IssueTrack looks">
         <SettingRow
           icon={
@@ -134,7 +123,6 @@ export const SettingsPage = () => {
         />
       </Section>
 
-      {/* ── Keyboard Shortcuts Section ───────────────────────────── */}
       <Section
         title="Keyboard Shortcuts"
         description="Navigate faster with these shortcuts"
@@ -183,7 +171,6 @@ export const SettingsPage = () => {
         />
       </div>
 
-      {/* Version badge */}
       <div className="flex items-center justify-center pb-4">
         <span className="text-xs text-muted-foreground font-mono">
           FutureForge v1.0.0 · Built with React + Express + MongoDB

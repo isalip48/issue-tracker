@@ -1,7 +1,5 @@
-// client/src/components/shared/CommandPalette.tsx
-// Cmd+K quick navigation — a power-user feature that will seriously impress
 import { useState, useEffect, useRef } from "react";
-import { useNavigate }                  from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   MdDashboard,
   MdBugReport,
@@ -9,81 +7,87 @@ import {
   MdSettings,
   MdSearch,
   MdKeyboardReturn,
-}                                       from "react-icons/md";
-import { cn }                           from "../../lib/utils";
+} from "react-icons/md";
+import { cn } from "@/lib/utils";
 
 interface Command {
-  id:          string;
-  label:       string;
+  id: string;
+  label: string;
   description: string;
-  icon:        React.ElementType;
-  action:      () => void;
-  keywords:    string[];    // For fuzzy matching
+  icon: React.ElementType;
+  action: () => void;
+  keywords: string[];
 }
 
 interface CommandPaletteProps {
-  isOpen:  boolean;
+  isOpen: boolean;
   onClose: () => void;
 }
 
 export const CommandPalette = ({ isOpen, onClose }: CommandPaletteProps) => {
-  const [query,           setQuery]         = useState("");
-  const [selectedIndex,   setSelectedIndex] = useState(0);
-  const inputRef                            = useRef<HTMLInputElement>(null);
-  const navigate                            = useNavigate();
+  const [query, setQuery] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
-  // ── Commands list ──────────────────────────────────────────────────────────
-  // Defined inside component so navigate() is in scope
   const COMMANDS: Command[] = [
     {
-      id:          "dashboard",
-      label:       "Go to Dashboard",
+      id: "dashboard",
+      label: "Go to Dashboard",
       description: "View analytics and stats",
-      icon:        MdDashboard,
-      action:      () => { navigate("/dashboard"); onClose(); },
-      keywords:    ["dashboard", "home", "stats", "analytics"],
+      icon: MdDashboard,
+      action: () => {
+        navigate("/dashboard");
+        onClose();
+      },
+      keywords: ["dashboard", "home", "stats", "analytics"],
     },
     {
-      id:          "issues",
-      label:       "View All Issues",
+      id: "issues",
+      label: "View All Issues",
       description: "Browse and filter issues",
-      icon:        MdBugReport,
-      action:      () => { navigate("/issues"); onClose(); },
-      keywords:    ["issues", "list", "bugs", "tasks"],
+      icon: MdBugReport,
+      action: () => {
+        navigate("/issues");
+        onClose();
+      },
+      keywords: ["issues", "list", "bugs", "tasks"],
     },
     {
-      id:          "new-issue",
-      label:       "Create New Issue",
+      id: "new-issue",
+      label: "Create New Issue",
       description: "Report a new bug or task",
-      icon:        MdAdd,
-      action:      () => { navigate("/issues/new"); onClose(); },
-      keywords:    ["create", "new", "add", "issue", "bug"],
+      icon: MdAdd,
+      action: () => {
+        navigate("/issues/new");
+        onClose();
+      },
+      keywords: ["create", "new", "add", "issue", "bug"],
     },
     {
-      id:          "settings",
-      label:       "Settings",
+      id: "settings",
+      label: "Settings",
       description: "Manage your preferences",
-      icon:        MdSettings,
-      action:      () => { navigate("/settings"); onClose(); },
-      keywords:    ["settings", "preferences", "account", "profile"],
+      icon: MdSettings,
+      action: () => {
+        navigate("/settings");
+        onClose();
+      },
+      keywords: ["settings", "preferences", "account", "profile"],
     },
   ];
 
-  // ── Filter commands by query ───────────────────────────────────────────────
   const filteredCommands = query.trim()
     ? COMMANDS.filter((cmd) => {
         const q = query.toLowerCase();
         return (
-          cmd.label.toLowerCase().includes(q)       ||
+          cmd.label.toLowerCase().includes(q) ||
           cmd.description.toLowerCase().includes(q) ||
           cmd.keywords.some((k) => k.includes(q))
         );
       })
-    : COMMANDS; // Show all when no query
+    : COMMANDS;
 
-  // ── Effects ───────────────────────────────────────────────────────────────
-
-  // Focus input when opened
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 50);
@@ -92,12 +96,10 @@ export const CommandPalette = ({ isOpen, onClose }: CommandPaletteProps) => {
     }
   }, [isOpen]);
 
-  // Reset selection when filtered results change
   useEffect(() => {
     setSelectedIndex(0);
   }, [query]);
 
-  // Keyboard navigation inside the palette
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (!isOpen) return;
@@ -106,9 +108,7 @@ export const CommandPalette = ({ isOpen, onClose }: CommandPaletteProps) => {
         onClose();
       } else if (e.key === "ArrowDown") {
         e.preventDefault();
-        setSelectedIndex((i) =>
-          Math.min(i + 1, filteredCommands.length - 1)
-        );
+        setSelectedIndex((i) => Math.min(i + 1, filteredCommands.length - 1));
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
         setSelectedIndex((i) => Math.max(i - 1, 0));
@@ -141,7 +141,6 @@ export const CommandPalette = ({ isOpen, onClose }: CommandPaletteProps) => {
         "
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Search input */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-border">
           <MdSearch size={18} className="text-muted-foreground shrink-0" />
           <input
@@ -160,7 +159,6 @@ export const CommandPalette = ({ isOpen, onClose }: CommandPaletteProps) => {
           </kbd>
         </div>
 
-        {/* Commands */}
         <div className="py-2 max-h-[300px] overflow-y-auto">
           {filteredCommands.length === 0 ? (
             <div className="px-4 py-8 text-center text-sm text-muted-foreground">
@@ -178,20 +176,23 @@ export const CommandPalette = ({ isOpen, onClose }: CommandPaletteProps) => {
                     "w-full flex items-center gap-3 px-4 py-3 text-left transition-colors",
                     selectedIndex === index
                       ? "bg-brand-500/10 text-foreground"
-                      : "text-foreground hover:bg-secondary"
+                      : "text-foreground hover:bg-secondary",
                   )}
                 >
-                  <div className={cn(
-                    "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
-                    selectedIndex === index
-                      ? "bg-brand-500/20"
-                      : "bg-secondary"
-                  )}>
+                  <div
+                    className={cn(
+                      "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
+                      selectedIndex === index
+                        ? "bg-brand-500/20"
+                        : "bg-secondary",
+                    )}
+                  >
                     <Icon
                       size={16}
-                      className={selectedIndex === index
-                        ? "text-brand-500"
-                        : "text-muted-foreground"
+                      className={
+                        selectedIndex === index
+                          ? "text-brand-500"
+                          : "text-muted-foreground"
                       }
                     />
                   </div>
