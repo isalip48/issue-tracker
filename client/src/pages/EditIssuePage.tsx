@@ -9,7 +9,7 @@ import { IssueTips } from "@/components/shared/IssueTips";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { IssueSkeleton } from "@/components/shared/IssueSkeleton";
-import { NotFoundState } from "@/components/shared/NotFoundState";
+import { EmptyState } from "@/components/shared/EmptyState";
 import { issueFormSchema, type IssueFormData } from "@/utils";
 
 export const EditIssuePage = () => {
@@ -70,9 +70,17 @@ export const EditIssuePage = () => {
 
   if (!issue)
     return (
-      <NotFoundState
-        message="Issue not found"
-        onBack={() => navigate("/issues")}
+      <EmptyState
+        variant="not-found"
+        title="Issue not found"
+        action={
+          <button
+            onClick={() => navigate("/issues")}
+            className="px-6 py-2.5 rounded-xl bg-secondary text-foreground hover:bg-border transition-colors font-semibold text-sm"
+          >
+            Back to Issues
+          </button>
+        }
       />
     );
 
