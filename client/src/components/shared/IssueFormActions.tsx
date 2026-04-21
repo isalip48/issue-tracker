@@ -1,4 +1,4 @@
-import { SubmitButton } from "@/components/shared/SubmitButton";
+import { AsyncButton } from "@/components/shared/AsyncButton";
 
 interface IssueFormActionsProps {
   isPending: boolean;
@@ -38,11 +38,12 @@ export const IssueFormActions = ({
       >
         {secondaryLabel}
       </button>
-      <SubmitButton
-        isPending={isPending}
+      <AsyncButton
+        variant="brand"
+        isLoading={isPending}
         disabled={disabled}
         label={label}
-        pendingLabel={pendingLabel}
+        loadingText={pendingLabel}
       />
     </div>
   </div>

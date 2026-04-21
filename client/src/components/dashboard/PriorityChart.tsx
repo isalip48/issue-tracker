@@ -1,4 +1,4 @@
-import { Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { Tooltip, ResponsiveContainer, PieChart, Pie } from "recharts";
 import { MdBugReport } from "react-icons/md";
 import { EmptyState } from "@/components/shared/EmptyState";
 
@@ -59,15 +59,8 @@ export const PriorityChart = ({ data }: PriorityChartProps) => (
               paddingAngle={8}
               dataKey="value"
               stroke="none"
-            >
-              {data.map((entry, index) => (
-                <Cell
-                  key={index}
-                  fill={entry.fill}
-                  className="transition-all duration-300 hover:opacity-80 outline-none"
-                />
-              ))}
-            </Pie>
+              className="outline-none"
+            />
             <Tooltip
               cursor={{ fill: "transparent" }}
               content={<CustomTooltip />}
@@ -75,7 +68,6 @@ export const PriorityChart = ({ data }: PriorityChartProps) => (
           </PieChart>
         </ResponsiveContainer>
 
-        {/* Custom Minimalist Legend */}
         <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2 w-full max-w-[200px]">
           {data.map((entry) => (
             <div key={entry.name} className="flex items-center gap-2">

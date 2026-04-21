@@ -14,6 +14,7 @@ import {
 import { DeleteConfirmDialog } from "@/components/issues/DeleteConfirmDialog";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { formatRelativeTime } from "@/utils";
+import { EmptyState } from "@/components/shared/EmptyState";
 
 export const IssueDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -70,19 +71,19 @@ export const IssueDetailPage = () => {
 
   if (isError || !issue) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
-        <MdDelete className="text-red-500" size={48} />
-        <p className="text-base font-semibold">Issue not found</p>
-        <p className="text-sm text-muted-foreground">
-          The issue may have been deleted or the link is invalid.
-        </p>
-        <button
-          onClick={() => navigate("/issues")}
-          className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition"
-        >
-          Back to Issues
-        </button>
-      </div>
+      <EmptyState
+        variant="not-found"
+        title="Issue not found"
+        description="The issue may have been deleted or the link is invalid."
+        action={
+          <button
+            onClick={() => navigate("/issues")}
+            className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition"
+          >
+            Back to Issues
+          </button>
+        }
+      />
     );
   }
 

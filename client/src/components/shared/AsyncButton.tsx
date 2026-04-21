@@ -4,8 +4,9 @@ import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 
 interface AsyncButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
+  label?: string;
   loadingText?: string;
-  variant?: "primary" | "ghost" | "destructive";
+  variant?: "primary" | "ghost" | "destructive" | "brand";
 }
 
 const variantClasses = {
@@ -14,10 +15,12 @@ const variantClasses = {
   ghost:
     "bg-transparent text-foreground border border-border/30 hover:bg-secondary/40 hover:border-border/60",
   destructive: "bg-red-500 hover:bg-red-600 text-white border-transparent",
+  brand: "bg-brand-500 hover:bg-brand-600 text-white border-transparent shadow-lg shadow-brand-500/20",
 };
 
 export const AsyncButton = ({
   isLoading = false,
+  label,
   loadingText,
   variant = "primary",
   children,
@@ -29,7 +32,7 @@ export const AsyncButton = ({
     {...props}
     disabled={disabled || isLoading}
     className={cn(
-      "group relative w-full h-[42px] rounded-lg",
+      "group relative h-[42px] px-6 rounded-lg",
       "transition-all duration-200 active:scale-[0.98]",
       "disabled:opacity-50 disabled:cursor-not-allowed",
       "flex items-center justify-center gap-2 overflow-hidden",
@@ -41,11 +44,11 @@ export const AsyncButton = ({
     {isLoading ? (
       <>
         <LoadingSpinner size="sm" />
-        {loadingText && <span>{loadingText}</span>}
+        {(loadingText || label) && <span>{loadingText || label}</span>}
       </>
     ) : (
-      <span className="relative z-10 transition-transform group-hover:-translate-x-0.5 duration-300">
-        {children}
+      <span className="relative z-10 flex items-center gap-2">
+        {children || label}
       </span>
     )}
   </button>

@@ -91,7 +91,9 @@ issue-tracker/
 ### Prerequisites
 
 - Node.js 20+
-- MongoDB (local or Atlas)
+- npm 9+
+- MongoDB
+- Docker Desktop (optional — for containerized setup)
 
 ### Setup & Run
 
@@ -112,6 +114,26 @@ issue-tracker/
    npm run dev
    ```
    Visit `http://localhost:5173`.
+
+---
+
+## 🐳 Docker Setup
+
+For a fully containerized backend environment:
+
+1. **Configure Root Environment**:
+   Create a `.env` file in the root directory with necessary database and JWT secrets (refer to `server/.env.example`).
+
+2. **Launch with Docker Compose**:
+   ```bash
+   # Build and start the backend service
+   docker-compose up --build -d
+   ```
+
+3. **Check Logs**:
+   ```bash
+   docker-compose logs -f server
+   ```
 
 ---
 
