@@ -102,7 +102,27 @@ export const createIssueSchema = z.object({
       .default("Minor"),
 
     tags: z.array(z.string().trim().toLowerCase()).optional(),
+    project: z.string({ required_error: "Project is required" }).trim(),
+    assignee: z.string().optional(),
   }),
+});
+
+export const createProjectSchema = z.object({
+  body: z.object({
+    name: z
+      .string({ required_error: "Project name is required" })
+      .min(2, "Project name must be at least 2 characters")
+      .max(50, "Project name cannot exceed 50 characters")
+      .trim(),
+    description: z
+      .string()
+      .max(500, "Description cannot exceed 500 characters")
+      .optional(),
+  }),
+});
+
+export const updateProjectSchema = z.object({
+  body: createProjectSchema.shape.body.partial(),
 });
 
 export const updateIssueSchema = z.object({

@@ -9,6 +9,7 @@ import {
   MdSchedule,
   MdBolt,
   MdTrackChanges,
+  MdFolder,
 } from "react-icons/md";
 import { formatDate, formatRelativeTime } from "@/utils";
 import type { Issue } from "@/types";
@@ -90,7 +91,24 @@ export const IssueDetailSidebar = ({
   const hasActions = canResolve || canClose || canReopen;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-[11px] uppercase font-black tracking-widest text-muted-foreground">
+      <div className="bg-card border border-border/60 rounded-3xl overflow-hidden shadow-xl shadow-foreground/[0.02]">
+        <SidebarCardHeader icon={<MdFolder size={16} />} title="Project" />
+        <div className="p-6">
+          <div className="flex flex-col gap-1">
+            <span className="text-base font-bold text-foreground normal-case tracking-normal">
+              {issue.project?.name || "No Project"}
+            </span>
+            {issue.project?.description && (
+              <p className="text-xs text-muted-foreground font-medium normal-case tracking-normal line-clamp-2">
+                {issue.project.description}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-4">
       <div className="bg-card border border-border/60 rounded-3xl overflow-hidden shadow-xl shadow-foreground/[0.02]">
         <SidebarCardHeader icon={<MdPeople size={16} />} title="People" />
         <div className="p-6 space-y-4">
@@ -210,6 +228,7 @@ export const IssueDetailSidebar = ({
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };

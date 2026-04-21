@@ -31,7 +31,7 @@ router
   .route("/:id")
   .get(getIssueById)
   .patch(validate(updateIssueSchema), updateIssue)
-  .delete(authorize("admin"), deleteIssue);
+  .delete(deleteIssue);
 
 router.get("/:id/activity", getIssueActivity);
 

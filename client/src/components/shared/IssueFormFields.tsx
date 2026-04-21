@@ -2,6 +2,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { TipTapEditor } from "@/components/issues/TipTapEditor";
 import { TagInput } from "@/components/issues/TagInput";
 import { FormSelect } from "@/components/shared/FormSelect";
+import { ProjectSelect } from "@/components/shared/ProjectSelect";
 import { AssigneeSelect } from "@/components/shared/AssigneeSelect";
 import type { IssueFormData } from "@/utils";
 import {
@@ -93,6 +94,16 @@ export const IssueFormFields = () => {
               control={control}
               render={({ field }) => (
                 <FormSelect label="Status" options={STATUSES} {...field} />
+              )}
+            />
+            <Controller
+              name="project"
+              control={control}
+              render={({ field }) => (
+                <ProjectSelect
+                  {...field}
+                  error={errors.project?.message as string}
+                />
               )}
             />
             <Controller

@@ -28,6 +28,7 @@ export const EditIssuePage = () => {
       severity: "Minor",
       tags: [],
       assignee: "",
+      project: "",
     },
   });
 
@@ -46,6 +47,10 @@ export const EditIssuePage = () => {
         typeof issue.assignee === "object"
           ? (issue.assignee as { _id?: string })?._id || ""
           : issue.assignee || "",
+      project:
+        typeof issue.project === "object"
+          ? (issue.project as { _id?: string })?._id || ""
+          : issue.project || "",
     });
   }, [issue, methods]);
 

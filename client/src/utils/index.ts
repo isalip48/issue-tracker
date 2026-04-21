@@ -141,6 +141,7 @@ export const issueFormSchema = z.object({
   priority: z.enum(["Low", "Medium", "High", "Critical"]).default("Medium"),
   severity: z.enum(["Minor", "Major", "Critical", "Blocker"]).default("Minor"),
   tags: z.array(z.string()).default([]),
+  project: z.string().min(1, "Please select a project"),
   assignee: z.string().nullable().optional(),
 });
 

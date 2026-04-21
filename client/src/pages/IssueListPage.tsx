@@ -145,9 +145,10 @@ export const IssueListPage = ({ presetAssignee }: IssueListPageProps) => {
       />
 
       <div className="rounded-xl border border-border bg-card overflow-hidden">
-        <div className="hidden md:grid grid-cols-[minmax(0,1fr)_110px_160px_120px_72px] gap-4 px-6 py-3 border-b border-border bg-secondary/30">
+        <div className="hidden md:grid grid-cols-[minmax(0,1fr)_140px_110px_160px_120px_72px] gap-4 px-6 py-3 border-b border-border bg-secondary/30">
           {[
             { label: "Title", align: "text-left" },
+            { label: "Project", align: "text-left" },
             { label: "Priority", align: "text-left" },
             { label: "Status", align: "text-center" },
             { label: "Assignee", align: "text-left" },

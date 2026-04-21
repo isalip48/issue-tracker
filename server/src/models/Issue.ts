@@ -25,6 +25,7 @@ export interface IIssue extends Document {
   priority: IssuePriority;
   severity: IssueSeverity;
   tags: string[];
+  project: Types.ObjectId;
   reporter: Types.ObjectId;
   assignee?: Types.ObjectId;
   resolvedAt?: Date;
@@ -80,6 +81,11 @@ const IssueSchema = new Schema<IIssue>(
       set: (tags: string[]) => tags.map((t) => t.trim().toLowerCase()),
     },
 
+    project: {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
+      required: [true, "Project is required"],
+    },
     reporter: {
       type: Schema.Types.ObjectId,
       ref: "User",
