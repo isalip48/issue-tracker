@@ -13,6 +13,8 @@ import { CreateIssuePage } from "@/pages/CreateIssuePage";
 import { EditIssuePage } from "@/pages/EditIssuePage";
 import { IssueDetailPage } from "@/pages/IssueDetailPage";
 import { useUIStore } from "@/store/uiStore";
+import { SettingsPage } from "./pages/SettingsPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 function App() {
   const { isDarkMode } = useUIStore();
@@ -23,7 +25,6 @@ function App() {
 
   return (
     <>
-      {/* Global ambient backdrop — dot-grid + glow blobs over the entire app */}
       <AmbientBlobs />
 
       <BrowserRouter>
@@ -34,31 +35,26 @@ function App() {
           duration={3000}
         />
         <Routes>
-          {/* Public */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 
-          {/* Protected */}
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/issues" element={<IssueListPage key="all" />} />
-              <Route path="/issues/me" element={<IssueListPage key="me" presetAssignee="me" />} />
+              <Route
+                path="/issues/me"
+                element={<IssueListPage key="me" presetAssignee="me" />}
+              />
               <Route path="/issues/new" element={<CreateIssuePage />} />
               <Route path="/issues/:id/edit" element={<EditIssuePage />} />
               <Route path="/issues/:id" element={<IssueDetailPage />} />
-              <Route
-                path="/settings"
-                element={
-                  <div className="p-6 text-muted-foreground">
-                    Settings — coming soon
-                  </div>
-                }
-              />
+              <Route path="/settings" element={<SettingsPage />} />
             </Route>
           </Route>
 
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </>

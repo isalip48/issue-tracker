@@ -35,7 +35,7 @@ const UserSchema = new Schema<IUser>(
       type: String,
       enum: {
         values: ["admin", "qa", "developer", "other"],
-        message: "Role must be admin, qa, developer, or other",
+        message: "Role must be admin, QA, developer, or other",
       },
       default: "developer",
     },
