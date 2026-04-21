@@ -33,7 +33,7 @@ export const IssueCard = ({
   return (
     <div
       className={cn(
-        "group grid grid-cols-[minmax(0,1fr)_110px_160px_120px_72px] items-center gap-4 px-6 py-4",
+        "group grid grid-cols-[minmax(0,1fr)_140px_110px_160px_120px_72px] items-center gap-4 px-6 py-4",
         "border-b border-border/50 last:border-b-0",
         "hover:bg-secondary/40 transition-all duration-200 cursor-pointer",
       )}
@@ -72,6 +72,12 @@ export const IssueCard = ({
             </>
           )}
         </div>
+      </div>
+
+      <div className="flex justify-start">
+        <span className="text-xs font-semibold text-muted-foreground truncate">
+          {issue.project?.name || "No Project"}
+        </span>
       </div>
 
       <div className="flex justify-start">

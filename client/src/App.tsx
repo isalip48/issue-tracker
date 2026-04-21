@@ -12,6 +12,7 @@ import { IssueListPage } from "@/pages/IssueListPage";
 import { CreateIssuePage } from "@/pages/CreateIssuePage";
 import { EditIssuePage } from "@/pages/EditIssuePage";
 import { IssueDetailPage } from "@/pages/IssueDetailPage";
+import { ProjectsPage } from "./pages/ProjectsPage";
 import { useUIStore } from "@/store/uiStore";
 import { SettingsPage } from "./pages/SettingsPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
@@ -49,6 +50,7 @@ function App() {
               <Route path="/issues/new" element={<CreateIssuePage />} />
               <Route path="/issues/:id/edit" element={<EditIssuePage />} />
               <Route path="/issues/:id" element={<IssueDetailPage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
             </Route>
           </Route>

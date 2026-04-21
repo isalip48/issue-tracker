@@ -15,6 +15,15 @@ export interface User {
   updatedAt?: string;
 }
 
+export interface Project {
+  _id: string;
+  name: string;
+  description?: string;
+  createdBy: User;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Issue {
   _id: string;
   title: string;
@@ -23,6 +32,7 @@ export interface Issue {
   priority: IssuePriority;
   severity: IssueSeverity;
   tags: string[];
+  project: Project;
   assignee?: User | null;
   resolvedAt?: string;
   reporter: User;

@@ -21,7 +21,7 @@ export const createIssue = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { title, description, status, priority, severity, tags, assignee } =
+    const { title, description, status, priority, severity, tags, assignee, project } =
       req.body;
     const reporterId = req.user!.userId;
 
@@ -34,9 +34,11 @@ export const createIssue = async (
       tags,
       assignee: assignee || null,
       reporter: reporterId,
+      project,
     });
 
     await issue.populate("reporter", "name email");
+    await issue.populate("project", "name");
     if (issue.assignee) await issue.populate("assignee", "name email");
 
     await logActivity(issue._id.toString(), reporterId, "Created issue", {});
@@ -60,6 +62,7 @@ export const getIssues = async (req: Request, res: Response): Promise<void> => {
     const priority = (req.query.priority as string) || undefined;
     const severity = (req.query.severity as string) || undefined;
     const assignee = (req.query.assignee as string) || undefined;
+    const project = (req.query.project as string) || undefined;
     const sortBy = (req.query.sortBy as string) || "createdAt";
     const order = (req.query.order as string) || "desc";
 
@@ -76,6 +79,7 @@ export const getIssues = async (req: Request, res: Response): Promise<void> => {
     } else if (assignee) {
       filter.assignee = assignee;
     }
+    if (project) filter.project = project;
 
     const sortOrder = order === "asc" ? 1 : -1;
     const sort: Record<string, 1 | -1> = { [sortBy]: sortOrder };
@@ -86,6 +90,7 @@ export const getIssues = async (req: Request, res: Response): Promise<void> => {
       Issue.find(filter)
         .populate("reporter", "name email")
         .populate("assignee", "name email")
+        .populate("project", "name")
         .sort(sort)
         .skip(skip)
         .limit(limit),
@@ -124,7 +129,8 @@ export const getIssueById = async (
 
     const issue = await Issue.findById(id)
       .populate("reporter", "name email")
-      .populate("assignee", "name email");
+      .populate("assignee", "name email")
+      .populate("project", "name");
 
     if (!issue) {
       res.status(404).json({ success: false, message: "Issue not found" });
@@ -164,6 +170,7 @@ export const updateIssue = async (
       "severity",
       "tags",
       "assignee",
+      "project",
     ];
 
     updatableFields.forEach((field) => {
@@ -182,7 +189,8 @@ export const updateIssue = async (
       { new: true, runValidators: true },
     )
       .populate("reporter", "name email")
-      .populate("assignee", "name email");
+      .populate("assignee", "name email")
+      .populate("project", "name");
 
     const changedFields = Object.keys(changes);
     const action =
