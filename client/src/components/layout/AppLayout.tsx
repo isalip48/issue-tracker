@@ -7,12 +7,6 @@ import { CommandPalette } from "../shared/CommandPalette";
 import { KeyboardShortcutsModal } from "../shared/KeyboardShortcutsModal";
 import { useAppShortcuts } from "../../hooks/useKeyboardShortcuts";
 
-const pageTitles: Record<string, string> = {
-  "/dashboard": "Dashboard",
-  "/issues": "All Issues",
-  "/issues/new": "Create Issue",
-  "/settings": "Settings",
-};
 
 export const AppLayout = () => {
   const { isSidebarOpen, toggleSidebar } = useUIStore();
@@ -31,9 +25,7 @@ export const AppLayout = () => {
     onGoToIssues: () => navigate("/issues"),
   });
 
-  const title =
-    pageTitles[location.pathname] ||
-    (location.pathname.includes("/issues/") ? "Issue Detail" : "IssueTrack");
+
 
   return (
     <div className="min-h-screen bg-background relative">
