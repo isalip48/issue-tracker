@@ -17,11 +17,19 @@ const PORT = process.env.PORT || 5000;
 app.use(helmet());
 app.use((req, res, next) => globalLimiter(req, res, next));
 
+const allowedOrigins = process.env.CLIENT_URL?.split(",") || [];
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
-  }),
+  })
 );
 
 app.use(express.json({ limit: "10kb" }));

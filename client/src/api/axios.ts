@@ -11,10 +11,10 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = useAuthStore.getState().accessToken;
+    const { accessToken } = useAuthStore.getState();
 
-    if (token) {
-      config.headers.set("Authorization", `Bearer ${token}`);
+    if (accessToken) {
+      config.headers.set("Authorization", `Bearer ${accessToken}`);
     }
     return config;
   },
@@ -45,13 +45,14 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    // Handle 401 Unauthorized
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
           .then((token) => {
-            originalRequest.headers.Authorization = `Bearer ${token}`;
+            originalRequest.headers.set("Authorization", `Bearer ${token}`);
             return api(originalRequest);
           })
           .catch((err) => Promise.reject(err));
@@ -61,44 +62,48 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const refreshToken = useAuthStore.getState().refreshToken;
+        const { refreshToken, user } = useAuthStore.getState();
 
         if (!refreshToken) {
           throw new Error("No refresh token available");
         }
 
-        const response = await axios.post(
-          `${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/auth/refresh`,
-          { refreshToken },
-        );
+        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+        const response = await axios.post(`${API_URL}/auth/refresh`, {
+          refreshToken,
+        });
 
-        const { accessToken, refreshToken: newRefreshToken } = response.data
-          .data
-          ? response.data.data
+        // The backend might return { data: { accessToken, refreshToken } } or { accessToken, refreshToken }
+        const { accessToken, refreshToken: newRefreshToken } = response.data.data 
+          ? response.data.data 
           : response.data;
-        const user = useAuthStore.getState().user;
 
         if (user && accessToken) {
-          useAuthStore
-            .getState()
-            .setAuth(user, accessToken, newRefreshToken || refreshToken);
+          useAuthStore.getState().setAuth(
+            user, 
+            accessToken, 
+            newRefreshToken || refreshToken
+          );
         }
 
-        api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
         originalRequest.headers.set("Authorization", `Bearer ${accessToken}`);
-
+        
         processQueue(null, accessToken);
-
         return api(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError, null);
         useAuthStore.getState().clearAuth();
-        window.location.href = "/login";
+        
+        // Prevent infinite loops or redirect issues during dev
+        if (window.location.pathname !== "/login") {
+          window.location.href = "/login";
+        }
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
       }
     }
+
     return Promise.reject(error);
   },
 );

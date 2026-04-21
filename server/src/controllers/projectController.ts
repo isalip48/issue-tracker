@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Project } from "../models/Project";
+import { Issue } from "../models/Issue";
 import mongoose from "mongoose";
 
 export const createProject = async (req: Request, res: Response): Promise<void> => {
@@ -99,8 +100,6 @@ export const deleteProject = async (req: Request, res: Response): Promise<void> 
     }
 
     // Check if there are any issues linked to this project
-    // Import Issue model here or at the top
-    const { Issue } = require("../models/Issue");
     const issueCount = await Issue.countDocuments({ project: id });
 
     if (issueCount > 0) {
