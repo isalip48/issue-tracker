@@ -62,6 +62,7 @@ export const useUpdateIssue = () => {
     mutationFn: ({ id, data }: { id: string; data: UpdateIssueData }) =>
       issuesApi.update(id, data),
 
+    // Optimistic update: Update the UI immediately before the server responds
     onMutate: async ({ id, data }) => {
       await queryClient.cancelQueries({ queryKey: issueKeys.detail(id) });
       const previousIssue = queryClient.getQueryData(issueKeys.detail(id));
@@ -83,6 +84,7 @@ export const useUpdateIssue = () => {
     },
 
     onError: (_err, { id }, context) => {
+      // Rollback to previous state if the update fails
       if (context?.previousIssue) {
         queryClient.setQueryData(issueKeys.detail(id), context.previousIssue);
       }
@@ -90,6 +92,7 @@ export const useUpdateIssue = () => {
     },
 
     onSuccess: (_data, { id }) => {
+      // Refresh the cache to ensure we have the latest server data
       queryClient.invalidateQueries({ queryKey: issueKeys.detail(id) });
       queryClient.invalidateQueries({ queryKey: issueKeys.activity(id) });
       queryClient.invalidateQueries({ queryKey: issueKeys.lists() });

@@ -27,6 +27,11 @@ const getRefreshSecret = (): string => {
   return secret;
 };
 
+/**
+ * Generates both an Access Token (15m) and a Refresh Token (7d).
+ * Access tokens are sent with every request, while refresh tokens are only
+ * used when the access token expires.
+ */
 export const generateTokens = (payLoad: TokenPayload): TokenPair => {
   const accessToken = jwt.sign(payLoad, getJWTSecret(), { expiresIn: "15m" });
 

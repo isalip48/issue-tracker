@@ -28,6 +28,11 @@ const failedQueue: Array<{
   reject: (error: unknown) => void;
 }> = [];
 
+/**
+ * Response Interceptor logic: Handles automatic token refreshing.
+ * If a request fails with 401 (Unauthorized), it attempts to refresh the access token
+ * using the refresh token and then retries the original request.
+ */
 const processQueue = (error: unknown, token: string | null = null) => {
   failedQueue.forEach((promise) => {
     if (error) {

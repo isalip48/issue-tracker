@@ -9,6 +9,10 @@ declare global {
   }
 }
 
+/**
+ * Middleware to protect routes. It verifies the JWT access token in the Authorization header.
+ * If valid, it attaches the decoded user payload to the request object.
+ */
 export const protect = (
   req: Request,
   res: Response,
@@ -40,6 +44,10 @@ export const protect = (
   }
 };
 
+/**
+ * Middleware to restrict access based on user roles (e.g., 'admin', 'qa').
+ * Must be used AFTER the 'protect' middleware.
+ */
 export const authorize = (...roles: string[]) => {
   return (req: Request, res: Response, next: NextFunction): void => {
     if (!req.user || !roles.includes(req.user.role)) {

@@ -3,6 +3,10 @@ import { Issue } from "../models/Issue";
 import { ActivityLog } from "../models/ActivityLog";
 import mongoose from "mongoose";
 
+/**
+ * Helper to log any activity (creation, updates) for an issue.
+ * It records who made the change, what action was performed, and the specific field changes.
+ */
 const logActivity = async (
   issueId: string,
   action: string,
@@ -161,6 +165,7 @@ export const updateIssue = async (
       return;
     }
 
+    // Detect which fields actually changed to generate a detailed activity log
     const changes: Record<string, { from: unknown; to: unknown }> = {};
     const updatableFields = [
       "title",
@@ -229,6 +234,7 @@ export const deleteIssue = async (
       return;
     }
 
+    // Authorization Check: Only Admin, Reporter, or Assignee can delete
     const requesterId = req.user!.userId;
     const requesterRole = req.user!.role;
 

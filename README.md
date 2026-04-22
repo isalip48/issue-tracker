@@ -180,7 +180,7 @@ VITE_API_URL=http://localhost:5000/api
 ### 3. Run in Development Mode
 
 ```bash
-# Starts both frontend (port 5173) and backend (port 5000) concurrently
+# Starts both frontend (port 5173) and backend (port 5000) using
 npm run dev
 ```
 
