@@ -145,7 +145,7 @@ export const IssueListPage = ({ presetAssignee }: IssueListPageProps) => {
       />
 
       <div className="rounded-xl border border-border bg-card overflow-hidden">
-        <div className="hidden md:grid grid-cols-[minmax(0,1fr)_140px_110px_160px_120px_72px] gap-4 px-6 py-3 border-b border-border bg-secondary/30">
+        <div className="hidden md:grid grid-cols-[minmax(0,1fr)_140px_110px_160px_120px_72px] gap-4 px-6 py-2 border-b border-border bg-secondary/30">
           {[
             { label: "Title", align: "text-left" },
             { label: "Project", align: "text-left" },
@@ -229,13 +229,15 @@ export const IssueListPage = ({ presetAssignee }: IssueListPageProps) => {
       </div>
 
       {pagination && pagination.total > 0 && (
-        <Pagination
-          currentPage={pagination.page}
-          totalPages={pagination.totalPages}
-          totalItems={pagination.total}
-          itemsPerPage={filters.limit ?? 10}
-          onPageChange={handlePageChange}
-        />
+        <div className="sticky bottom-0 bg-background/80 backdrop-blur-md py-3 z-20 border-t border-border/50 mt-auto">
+          <Pagination
+            currentPage={pagination.page}
+            totalPages={pagination.totalPages}
+            totalItems={pagination.total}
+            itemsPerPage={filters.limit ?? 10}
+            onPageChange={handlePageChange}
+          />
+        </div>
       )}
 
       <DeleteConfirmDialog

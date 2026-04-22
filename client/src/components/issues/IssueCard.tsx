@@ -39,7 +39,7 @@ export const IssueCard = ({
       )}
       onClick={() => navigate(`/issues/${issue._id}`)}
     >
-      <div className="flex flex-col min-w-0 space-y-1.5">
+      <div className="flex flex-col min-w-0 space-y-0.5">
         <p className="text-sm font-semibold text-foreground truncate group-hover:text-primary transition-colors tracking-tight">
           {issue.title}
         </p>
