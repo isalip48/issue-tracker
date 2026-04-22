@@ -47,7 +47,7 @@ Create, assign, prioritise, and resolve bugs and tasks with a sleek dark UI, ric
 - **JWT Auth** - short-lived access tokens (15 min) with silent refresh (7 days)
 - **Role-Based Access** - Admin, QA, Developer, and Other roles with tailored permissions
 - **Deletion Rules** - issues can only be deleted by an Admin, the original Reporter, or the assigned Developer
-- **Project Constraints** - projects with linked issues cannot be deleted until issues are reassigned or removed
+- **Project Constraints** - projects can only be deleted by an Admin; deletion is blocked if issues are still linked to the project
 
 ### Search & Filtering
 
