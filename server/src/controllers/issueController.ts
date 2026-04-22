@@ -41,7 +41,7 @@ export const createIssue = async (
     await issue.populate("project", "name");
     if (issue.assignee) await issue.populate("assignee", "name email");
 
-    await logActivity(issue._id.toString(), reporterId, "Created issue", {});
+    await logActivity(issue._id.toString(), "Created issue", reporterId, {});
 
     res.status(201).json({
       success: true,
@@ -198,7 +198,7 @@ export const updateIssue = async (
         ? `Updated ${changedFields.join(", ")}`
         : "Updated issue (no changes)";
 
-    await logActivity(id, req.user!.userId, action, changes);
+    await logActivity(id, action, req.user!.userId, changes);
 
     res.status(200).json({
       success: true,

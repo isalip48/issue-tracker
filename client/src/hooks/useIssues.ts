@@ -91,6 +91,7 @@ export const useUpdateIssue = () => {
 
     onSuccess: (_data, { id }) => {
       queryClient.invalidateQueries({ queryKey: issueKeys.detail(id) });
+      queryClient.invalidateQueries({ queryKey: issueKeys.activity(id) });
       queryClient.invalidateQueries({ queryKey: issueKeys.lists() });
       queryClient.invalidateQueries({ queryKey: issueKeys.stats() });
     },
@@ -102,7 +103,9 @@ export const useUpdateIssueStatus = () => {
   return useMutation({
     mutationFn: ({ id, status }: { id: string; status: string }) =>
       issuesApi.update(id, { status }),
-    onSuccess: () => {
+    onSuccess: (_data, { id }) => {
+      queryClient.invalidateQueries({ queryKey: issueKeys.detail(id) });
+      queryClient.invalidateQueries({ queryKey: issueKeys.activity(id) });
       queryClient.invalidateQueries({ queryKey: issueKeys.lists() });
       queryClient.invalidateQueries({ queryKey: issueKeys.stats() });
       toast.success("Status updated");

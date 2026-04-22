@@ -1,4 +1,3 @@
-// client/src/pages/CreateIssuePage.tsx
 import { useNavigate } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,8 +23,6 @@ const DEFAULT_DESCRIPTION = `
 <h3>Actual Behavior</h3>
 <p>What actually happened?</p>
 <p></p>
-<h3>Possible Causes</h3>
-<p>Any thoughts on what might be causing this?</p>
 `;
 
 export const CreateIssuePage = () => {

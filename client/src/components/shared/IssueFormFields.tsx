@@ -65,18 +65,25 @@ export const IssueFormFields = () => {
           <div className="flex items-center gap-2">
             <MdDescription className="text-brand-500" size={18} />
             <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
-              Description
+              Description <span className="text-red-500">*</span>
             </label>
           </div>
           <Controller
             name="description"
             control={control}
             render={({ field }) => (
-              <TipTapEditor
-                value={field.value}
-                onChange={field.onChange}
-                error={errors.description?.message}
-              />
+              <div className="space-y-1">
+                <TipTapEditor
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={errors.description?.message}
+                />
+                {errors.description && (
+                  <p className="text-xs font-medium text-red-500">
+                    {errors.description.message}
+                  </p>
+                )}
+              </div>
             )}
           />
         </div>

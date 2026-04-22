@@ -15,6 +15,8 @@ import { DeleteConfirmDialog } from "@/components/issues/DeleteConfirmDialog";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { formatRelativeTime } from "@/utils";
 import { EmptyState } from "@/components/shared/EmptyState";
+import { ActivityLog } from "@/components/issues/ActivityLog";
+import { MdHistory } from "react-icons/md";
 
 export const IssueDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -206,6 +208,26 @@ export const IssueDetailPage = () => {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+
+          <div className="relative overflow-hidden bg-card border border-border/60 rounded-3xl shadow-xl shadow-foreground/[0.02]">
+            <div className="relative p-8 md:p-10">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center text-brand-500 border border-blue-500/20 shadow-inner">
+                  <MdHistory size={18} />
+                </div>
+                <div>
+                  <h2 className="text-sm font-black uppercase tracking-widest text-foreground">
+                    Activity
+                  </h2>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    Complete audit trail
+                  </p>
+                </div>
+              </div>
+
+              <ActivityLog issueId={id} />
             </div>
           </div>
         </div>
