@@ -229,7 +229,7 @@ export const IssueListPage = ({ presetAssignee }: IssueListPageProps) => {
       </div>
 
       {pagination && pagination.total > 0 && (
-        <div className="sticky bottom-0 bg-background/80 backdrop-blur-md py-3 z-20 border-t border-border/50 mt-auto">
+        <div className="sticky bottom-0 bg-background/80 backdrop-blur-md py-3 z-20">
           <Pagination
             currentPage={pagination.page}
             totalPages={pagination.totalPages}

@@ -21,8 +21,12 @@ export const IssueCard = ({
   const navigate = useNavigate();
   const { user } = useAuthStore();
 
-  const assignee = issue.assignee as { _id?: string; name?: string } | undefined;
-  const reporter = issue.reporter as { _id?: string; name?: string } | undefined;
+  const assignee = issue.assignee as
+    | { _id?: string; name?: string }
+    | undefined;
+  const reporter = issue.reporter as
+    | { _id?: string; name?: string }
+    | undefined;
   const assigneeName = assignee?.name;
 
   const isAdmin = user?.role?.toLowerCase() === "admin";
@@ -44,9 +48,7 @@ export const IssueCard = ({
           {issue.title}
         </p>
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-muted-foreground font-medium">
-          <span className="font-mono">
-            #{issue._id.slice(-6)}
-          </span>
+          <span className="font-mono">#{issue._id.slice(-6)}</span>
           <span className="opacity-30">•</span>
           <span>{formatRelativeTime(issue.createdAt)}</span>
           <span className="opacity-30">•</span>
@@ -97,7 +99,9 @@ export const IssueCard = ({
             {assigneeName}
           </span>
         ) : (
-          <span className="text-xs text-muted-foreground/50 italic">Unassigned</span>
+          <span className="text-xs text-muted-foreground/50 italic">
+            Unassigned
+          </span>
         )}
       </div>
 

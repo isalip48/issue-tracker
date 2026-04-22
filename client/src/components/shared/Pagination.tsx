@@ -40,7 +40,7 @@ export const Pagination = ({
   };
 
   return (
-    <div className="flex items-center justify-between px-1 py-3">
+    <div className="flex items-center justify-between px-1 ">
       <p className="text-xs text-muted-foreground just">
         Showing <span className="font-medium text-foreground">{startItem}</span>
         {" – "}
