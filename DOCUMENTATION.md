@@ -71,7 +71,7 @@ client/src/
 ├── api/              # Axios instances — one file per domain
 ├── components/
 │   ├── issues/       # Domain components: IssueCard, TipTapEditor, ActivityLog
-│   ├── layout/       # Sidebar, Navbar, AppLayout (Outlet wrapper)
+│   ├── layout/       # Sidebar, Navbar, AppLayout (Fixed-height shell)
 │   └── shared/       # Reusable: FormSelect, AssigneeSelect, StatusBadge, etc.
 ├── hooks/            # React Query hooks: useIssues, useProjects, useUsers
 ├── pages/            # Route-level components
@@ -394,7 +394,9 @@ Caddy automatically provisions and renews SSL certificates from Let's Encrypt an
 
 ## Environment Variables
 
-### Server (`server/.env`)
+### Root / Server (`.env`)
+
+In production, the `docker-compose.prod.yml` loads environment variables from the `.env` file located in the project root.
 
 | Variable                 | Required | Description                                         |
 | ------------------------ | -------- | --------------------------------------------------- |
@@ -425,19 +427,10 @@ Defined in `.github/workflows/ci.yml`:
 on: push to main or pull_request to main
 
 Jobs (run in parallel):
-  server  → npm install → tsc --noEmit → npm run build
-  client  → npm install → tsc --noEmit → npm run build
-
-  docker  → needs: [server, client]
-          → docker build ./server
-          → docker build ./client
-
-  deploy  → needs: [server, client]
-          → if: push to main only
-          → SSH into EC2
-          → git pull origin main
-          → docker compose -f docker-compose.prod.yml up -d --build
-          → docker system prune -f
+  server -> npm install -> tsc --noEmit -> npm run build
+  client -> npm install -> tsc --noEmit -> npm run build
+  docker -> verifies server + client builds
+  deploy -> SSH into EC2 -> git reset -> git pull origin main -> docker compose up
 ```
 
 **GitHub Secrets required:**
