@@ -103,4 +103,4 @@ IssueForge is built on a modern **MERN** stack (MongoDB, Express, React, Node.js
 
 ---
 
-Built with precision by **Isali Perera**.
+Built by **Isali Perera**.

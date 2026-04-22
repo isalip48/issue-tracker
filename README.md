@@ -143,6 +143,4 @@ For detailed architectural information, API reference, and security consideratio
 
 ---
 
-## 📄 License
-
-MIT — Created by **Isali Perera**.
+Built by **Isali Perera**.
