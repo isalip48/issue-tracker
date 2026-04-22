@@ -91,7 +91,7 @@ export const LoginPage = () => {
           </div>
         </div>
 
-        <div >
+        <div className="flex justify-end pt-2">
           <AsyncButton type="submit" isLoading={isPending}>
             Continue to workspace
           </AsyncButton>

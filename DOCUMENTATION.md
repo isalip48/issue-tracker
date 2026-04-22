@@ -1,4 +1,4 @@
-# IssueForge — Technical Documentation 📚
+# IssueForge — Technical Documentation
 
 ---
 
@@ -49,7 +49,7 @@ IssueForge is built on a full **MERN** stack (MongoDB, Express, React, Node.js) 
                         └────────────────────────┘
 ```
 
-### Backend — Express.js
+### Backend - Express.js
 
 The API is a stateless REST server. All routes (except `/auth/register` and `/auth/login`) require a valid JWT in the `Authorization: Bearer <token>` header.
 
@@ -62,9 +62,9 @@ server/src/
 └── utils/            # db.ts, jwt.ts, validators.ts (Zod schemas)
 ```
 
-### Frontend — React + Vite
+### Frontend - React + Vite
 
-The frontend follows a strict separation between server state (TanStack Query) and UI state (Zustand). No component fetches data directly — all data access goes through custom hooks.
+The frontend follows a strict separation between server state (TanStack Query) and UI state (Zustand). No component fetches data directly - all data access goes through custom hooks.
 
 ```
 client/src/
@@ -268,11 +268,11 @@ A Mongoose `pre-save` hook automatically sets `resolvedAt` when `status` changes
 IssueForge uses a dual-token pattern:
 
 ```
-Access Token   → short-lived (15 min), sent with every API request
-Refresh Token  → long-lived (7 days), used only to obtain new access tokens
+Access Token -> short-lived (15 min), sent with every API request
+Refresh Token -> long-lived (7 days), used only to obtain new access tokens
 ```
 
-If an access token expires mid-session, the Axios response interceptor silently calls `/auth/refresh`, updates the stored token, and retries the original request — the user never sees a logout.
+If an access token expires mid-session, the Axios response interceptor silently calls `/auth/refresh`, updates the stored token, and retries the original request - the user never sees a logout.
 
 ### Silent Refresh Sequence
 
@@ -314,9 +314,9 @@ Concurrent requests during a refresh are queued and replayed once the new token 
 
 ## State Management
 
-### TanStack Query — Server State
+### TanStack Query - Server State
 
-All data fetched from the API lives in the React Query cache. Components never call Axios directly — they use custom hooks that wrap `useQuery` and `useMutation`.
+All data fetched from the API lives in the React Query cache. Components never call Axios directly - they use custom hooks that wrap `useQuery` and `useMutation`.
 
 ```
 useIssues(filters)     → paginated issue list, re-fetches on filter change
@@ -329,15 +329,15 @@ useProjects()          → project list, 5-min stale time
 useUsers()             → user list for assignee dropdown, 5-min stale time
 ```
 
-**Optimistic Updates** — `useUpdateIssue` immediately applies the change to the detail cache before the server responds. If the server returns an error, the previous snapshot (saved in `onMutate`) is restored.
+**Optimistic Updates** - `useUpdateIssue` immediately applies the change to the detail cache before the server responds. If the server returns an error, the previous snapshot (saved in `onMutate`) is restored.
 
-### Zustand — UI State
+### Zustand - UI State
 
 ```
-uiStore    → isDarkMode, isSidebarOpen
+uiStore    -> isDarkMode, isSidebarOpen
              persisted to localStorage via zustand/middleware/persist
 
-authStore  → user, accessToken, refreshToken, isAuthenticated
+authStore -> user, accessToken, refreshToken, isAuthenticated
              persisted to localStorage
              setAuth() also writes tokens to localStorage for Axios interceptor
              clearAuth() removes tokens and resets all fields
@@ -461,8 +461,8 @@ Jobs (run in parallel):
 | `Ctrl + 2` | Navigate to All Issues                         |
 | `Esc`      | Close any active modal or dialog               |
 
-Shortcuts are registered via a custom `useKeyboardShortcuts` hook that checks `isContentEditable`, `INPUT`, `TEXTAREA`, and `SELECT` targets before firing — so they never interfere with typing in forms or the TipTap editor.
+Shortcuts are registered via a custom `useKeyboardShortcuts` hook that checks `isContentEditable`, `INPUT`, `TEXTAREA`, and `SELECT` targets before firing - so they never interfere with typing in forms or the TipTap editor.
 
 ---
 
-\*Built by **Isali Perera\***
+\*Built by **Isali Perera\*

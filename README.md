@@ -2,7 +2,7 @@
 
 > A high-performance, full-stack issue tracking application built for modern developer teams.
 
-Create, assign, prioritise, and resolve bugs and tasks with a sleek dark UI, rich text descriptions, real-time analytics, project workspaces, and power-user keyboard shortcuts — deployed on a split-hosting architecture for production-grade performance.
+Create, assign, prioritise, and resolve bugs and tasks with a sleek dark UI, rich text descriptions, real-time analytics, project workspaces, and power-user keyboard shortcuts - deployed on a split-hosting architecture for production-grade performance.
 
 ![Version](https://img.shields.io/badge/version-1.0.0-6366f1?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-22c55e?style=flat-square)
@@ -12,7 +12,7 @@ Create, assign, prioritise, and resolve bugs and tasks with a sleek dark UI, ric
 
 ---
 
-## 🔗 Live Demo
+## Live Demo
 
 | Service            | URL                                                                                        |
 | ------------------ | ------------------------------------------------------------------------------------------ |
@@ -23,58 +23,58 @@ Create, assign, prioritise, and resolve bugs and tasks with a sleek dark UI, ric
 
 ---
 
-## ✨ Features
+## Features
 
-### 🛠️ Core Issue Management
+### Core Issue Management
 
-- **Full CRUD** — create, view, edit, and delete issues with confirmation prompts
-- **Project Workspaces** — organise issues into colour-coded projects
-- **Rich Text Descriptions** — TipTap editor with bold, italic, code, lists, blockquotes
-- **Activity Log** — complete audit trail of every field change with timestamps
-- **Quick Status Updates** — change status directly from the issue list without opening the detail page
-- **Assignee & Reporter** — assign issues to team members with role-aware dropdowns
+- **Full CRUD** - create, view, edit, and delete issues with confirmation prompts
+- **Project Workspaces** - organise issues into colour-coded projects
+- **Rich Text Descriptions** - TipTap editor with bold, italic, code, lists, blockquotes
+- **Activity Log** - complete audit trail of every field change with timestamps
+- **Quick Status Updates** - change status directly from the issue list without opening the detail page
+- **Assignee & Reporter** - assign issues to team members with role-aware dropdowns
 
-### 📊 Dashboard & Analytics
+### Dashboard & Analytics
 
-- **Live Statistics** — Open, In Progress, Resolved, and Closed issue counts
-- **Bar Chart** — issues broken down by status
-- **Donut Chart** — issues broken down by priority
-- **7-Day Trend Line** — visualise issue creation velocity over time
-- **Recent Issues** — quick access to the latest activity across your workspace
+- **Live Statistics** - Open, In Progress, Resolved, and Closed issue counts
+- **Bar Chart** - issues broken down by status
+- **Donut Chart** - issues broken down by priority
+- **7-Day Trend Line** - visualise issue creation velocity over time
+- **Recent Issues** - quick access to the latest activity across your workspace
 
-### 🔐 Authentication & Access Control
+### Authentication & Access Control
 
-- **Secure Registration & Login** — email and password with bcrypt hashing
-- **JWT Auth** — short-lived access tokens (15 min) with silent refresh (7 days)
-- **Role-Based Access** — Admin, QA, Developer, and Other roles with tailored permissions
-- **Deletion Rules** — issues can only be deleted by an Admin, the original Reporter, or the assigned Developer
-- **Project Constraints** — projects with linked issues cannot be deleted until issues are reassigned or removed
+- **Secure Registration & Login** - email and password with bcrypt hashing
+- **JWT Auth** - short-lived access tokens (15 min) with silent refresh (7 days)
+- **Role-Based Access** - Admin, QA, Developer, and Other roles with tailored permissions
+- **Deletion Rules** - issues can only be deleted by an Admin, the original Reporter, or the assigned Developer
+- **Project Constraints** - projects with linked issues cannot be deleted until issues are reassigned or removed
 
-### 🔍 Search & Filtering
+### Search & Filtering
 
-- **Debounced Full-Text Search** — optimised API calls, no request on every keystroke
+- **Debounced Full-Text Search** - optimised API calls, no request on every keystroke
 - **Filter by Status, Priority, Severity, and Project**
 - **Sort** by created date, updated date, priority, or status
-- **Pagination** — configurable page size
+- **Pagination** - configurable page size
 
-### ⌨️ Power User Features
+###  Power User Features
 
-- **Keyboard Shortcuts** — `Ctrl+I` new issue, `Ctrl+K` command palette, `Ctrl+H` shortcuts guide
-- **Command Palette** — fuzzy search to jump to any page instantly
-- **CSV & JSON Export** — one-click data export from the issue list
-- **Dark Mode** — high-contrast dark theme persisted across sessions via Zustand
-- **Collapsible Sidebar** — more screen space when you need it
+- **Keyboard Shortcuts** - `Ctrl+I` new issue, `Ctrl+K` command palette, `Ctrl+H` shortcuts guide
+- **Command Palette** - fuzzy search to jump to any page instantly
+- **CSV & JSON Export** - one-click data export from the issue list
+- **Dark Mode** - high-contrast dark theme persisted across sessions via Zustand
+- **Collapsible Sidebar** - more screen space when you need it
 
-### 🚢 Infrastructure
+### Infrastructure
 
-- **Dockerised Backend** — runs with a single `docker compose` command
-- **Automatic HTTPS** — Caddy reverse proxy with Let's Encrypt (zero config SSL)
-- **CI/CD Pipeline** — GitHub Actions runs type checks and deploys on every push to `main`
-- **Split Hosting** — Vercel for the frontend CDN, EC2 for the API server
+- **Dockerised Backend** - runs with a single `docker compose` command
+- **Automatic HTTPS** - Caddy reverse proxy with Let's Encrypt (zero config SSL)
+- **CI/CD Pipeline** - GitHub Actions runs type checks and deploys on every push to `main`
+- **Split Hosting** - Vercel for the frontend CDN, EC2 for the API server
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer          | Technology                                        |
 | -------------- | ------------------------------------------------- |
@@ -91,7 +91,7 @@ Create, assign, prioritise, and resolve bugs and tasks with a sleek dark UI, ric
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 issue-tracker/
@@ -130,7 +130,7 @@ issue-tracker/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -184,11 +184,11 @@ VITE_API_URL=http://localhost:5000/api
 npm run dev
 ```
 
-Visit `http://localhost:5173` — you'll be redirected to the login page.
+Visit `http://localhost:5173` - you'll be redirected to the login page.
 
 ---
 
-## 🐳 Docker
+## Docker
 
 ### Local Development
 
@@ -210,7 +210,7 @@ docker compose -f docker-compose.prod.yml down
 
 ---
 
-## 🚢 Deployment Architecture
+## Deployment Architecture
 
 ```
 Developer pushes to GitHub (main)
@@ -219,8 +219,8 @@ Developer pushes to GitHub (main)
   ├── TypeScript type check (client + server)
   ├── Production build verification
   ├── Docker image build check
-  ├── Vercel auto-deploys frontend ────────────────→ Vercel CDN (global)
-  └── SSH → EC2 → git pull → docker compose up ──→ AWS EC2 t2.micro
+  ├── Vercel auto-deploys frontend -> Vercel CDN (global)
+  └── SSH → EC2 → git pull → docker compose up -> AWS EC2 t2.micro
 ```
 
 | Service         | Platform         | Notes                            |
@@ -229,11 +229,11 @@ Developer pushes to GitHub (main)
 | **Backend API** | AWS EC2 t2.micro | Docker container, Caddy HTTPS    |
 | **Database**    | MongoDB Atlas M0 | Free tier, cloud hosted          |
 
-> **Why split hosting?** Running both frontend builds and the backend on a single t2.micro (1 GB RAM) caused disk space exhaustion during Docker builds. Vercel handles the React frontend with zero server overhead, while EC2 runs the Express API exclusively — a cleaner separation of concerns and a more production-realistic architecture.
+> **Why split hosting?** Running both frontend builds and the backend on a single t2.micro (1 GB RAM) caused disk space exhaustion during Docker builds. Vercel handles the React frontend with zero server overhead, while EC2 runs the Express API exclusively - a cleaner separation of concerns and a more production-realistic architecture.
 
 ---
 
-## ⌨️ Keyboard Shortcuts
+## Keyboard Shortcuts
 
 | Shortcut   | Action                            |
 | ---------- | --------------------------------- |
@@ -247,17 +247,12 @@ Developer pushes to GitHub (main)
 
 ---
 
-## 📖 Further Reading
+## Further Reading
 
 For detailed architectural decisions, full API reference, data models, business rules, and security considerations, see **[DOCUMENTATION.md](./DOCUMENTATION.md)**.
 
----
-
-## 📄 License
-
-MIT — see [LICENSE](./LICENSE) for details.
 
 ---
 
 Built by **Isali Perera**
-_Associate Frontend Engineer Assessment — demonstrating real-world engineering judgment beyond assignment requirements._
+_Associate Frontend Engineer Assessment_

@@ -53,7 +53,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     if (!user) {
       res.status(401).json({
         success: false,
-        message: "Invalid email or password",
+        message: "No account found with this email address.",
       });
       return;
     }
@@ -62,7 +62,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     if (!isPasswordValid) {
       res.status(401).json({
         success: false,
-        message: "Invalid email or password",
+        message: "Incorrect password. Please try again.",
       });
       return;
     }
