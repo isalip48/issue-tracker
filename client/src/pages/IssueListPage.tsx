@@ -98,7 +98,7 @@ export const IssueListPage = ({ presetAssignee }: IssueListPageProps) => {
   const hasFilters = effectiveFilters.search || effectiveFilters.status || effectiveFilters.priority;
 
   return (
-    <div className="flex flex-col max-h-full space-y-4 animate-fade-up">
+    <div className="space-y-4 animate-fade-up">
       <div className="flex items-center justify-between">
         <div>
           {isMyIssues ? (
@@ -144,7 +144,7 @@ export const IssueListPage = ({ presetAssignee }: IssueListPageProps) => {
         hideAssigneeFilter={isMyIssues}
       />
 
-      <div className="min-h-0 rounded-xl border border-border bg-card flex flex-col overflow-hidden">
+      <div className="rounded-xl border border-border bg-card overflow-hidden">
         <div className="flex-shrink-0 hidden md:grid grid-cols-[minmax(0,1fr)_140px_110px_160px_120px_72px] gap-4 px-6 py-2 border-b border-border bg-secondary/30">
           {[
             { label: "Title", align: "text-left" },
@@ -215,7 +215,7 @@ export const IssueListPage = ({ presetAssignee }: IssueListPageProps) => {
         )}
 
         {!isLoading && !isError && issues.length > 0 && (
-          <div className="flex-1 overflow-y-auto">
+          <div>
             {issues.map((issue) => (
               <IssueCard
                 key={issue._id}
@@ -229,7 +229,7 @@ export const IssueListPage = ({ presetAssignee }: IssueListPageProps) => {
       </div>
 
       {pagination && pagination.total > 0 && (
-        <div className="py-2 border-t border-border mt-auto">
+        <div className="py-6 border-t border-border/10">
           <Pagination
             currentPage={pagination.page}
             totalPages={pagination.totalPages}

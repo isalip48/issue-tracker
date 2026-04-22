@@ -160,7 +160,7 @@ cp server/.env.example server/.env
 ```env
 PORT=5000
 CLIENT_URL=http://localhost:5173
-MONGODB_URI=mongodb://localhost:27017/issue-tracker
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/issue-tracker
 JWT_SECRET=          # generate: openssl rand -base64 32
 JWT_REFRESH_SECRET=  # generate: openssl rand -base64 32
 JWT_EXPIRES_IN=15m
