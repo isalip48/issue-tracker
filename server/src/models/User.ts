@@ -1,5 +1,6 @@
 import { Schema, model, Document, HydratedDocument } from "mongoose";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 
 export interface IUser extends Document {
   name: string;
@@ -8,7 +9,10 @@ export interface IUser extends Document {
   role: "admin" | "qa" | "developer" | "other";
   createdAt: Date;
   updatedAt: Date;
+  resetPasswordToken?: string;
+  resetPasswordExpire?: Date;
   comparePassword(candidatePassword: string): Promise<boolean>;
+  getResetPasswordToken(): string;
 }
 
 const UserSchema = new Schema<IUser>(
@@ -39,6 +43,8 @@ const UserSchema = new Schema<IUser>(
       },
       default: "developer",
     },
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
   },
   {
     timestamps: true,
@@ -69,6 +75,23 @@ UserSchema.methods.comparePassword = async function (
   candidatePassword: string
 ): Promise<boolean> {
   return bcrypt.compare(candidatePassword, this.password);
+};
+
+// 🔑 Generate reset password token
+UserSchema.methods.getResetPasswordToken = function (): string {
+  // Generate token
+  const resetToken = crypto.randomBytes(20).toString("hex");
+
+  // Hash token and set to resetPasswordToken field
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  // Set expire (10 mins)
+  this.resetPasswordExpire = new Date(Date.now() + 10 * 60 * 1000);
+
+  return resetToken;
 };
 
 export const User = model<IUser>("User", UserSchema);

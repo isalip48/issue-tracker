@@ -59,7 +59,14 @@ export const IssueFiltersBar = ({
     filters.status || filters.priority || filters.search || filters.assignee;
 
   const clearFilters = () => {
-    onFilterChange({ page: 1, limit: filters.limit });
+    onFilterChange({
+      page: 1,
+      limit: filters.limit,
+      status: undefined,
+      priority: undefined,
+      search: "",
+      assignee: undefined,
+    });
   };
 
   return (

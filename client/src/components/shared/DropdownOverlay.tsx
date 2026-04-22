@@ -66,12 +66,10 @@ export const DropdownOverlay = ({
   return createPortal(
     <div
       ref={portalRef}
-      className="fixed z-[9999] rounded-xl overflow-hidden bg-card border border-border shadow-[0_12px_40px_rgba(0,0,0,0.2)] "
+      className="fixed z-[9999] rounded-xl overflow-y-auto bg-card border border-border shadow-[0_12px_40px_rgba(0,0,0,0.2)] max-h-60 py-1.5"
       style={{ top: pos.top, left: pos.left, width: pos.width }}
     >
-      <div className="max-h-60 overflow-y-auto py-1.5 custom-scrollbar">
-        {children}
-      </div>
+      {children}
     </div>,
     document.body,
   );

@@ -6,17 +6,17 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 225 60% 99.5%;
     --foreground: 222 47% 11%;
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
     --primary: 239 84% 67%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 215 20% 96%;
+    --secondary: 225 40% 96%;
     --secondary-foreground: 222 47% 11%;
-    --muted: 215 20% 96%;
-    --muted-foreground: 215 16% 47%;
-    --border: 214 32% 91%;
+    --muted: 225 30% 96%;
+    --muted-foreground: 215 16% 45%;
+    --border: 225 30% 92%;
     --input: 214 32% 91%;
     --ring: 239 84% 67%;
     --radius: 0.5rem;

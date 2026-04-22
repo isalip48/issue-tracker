@@ -58,7 +58,7 @@ export const Logo = ({ className, size = "md" }: LogoProps) => {
 
         {!isSm && (
           <span className="text-[8.5px] font-bold text-muted-foreground/60 tracking-[0.25em] uppercase mt-1 leading-none pl-1">
-            Industrial Grade
+            ULTIMATE ISSUE TRACKER
           </span>
         )}
       </div>

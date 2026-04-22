@@ -47,6 +47,59 @@ export const refreshTokenSchema = z.object({
   }),
 });
 
+export const forgotPasswordSchema = z.object({
+  body: z.object({
+    email: z
+      .string({ required_error: "Email is required" })
+      .email("Please provide a valid email")
+      .toLowerCase(),
+  }),
+});
+
+export const resetPasswordSchema = z.object({
+  body: z
+    .object({
+      password: z
+        .string({ required_error: "Password is required" })
+        .min(6, "Password must be at least 6 characters")
+        .regex(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+          "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+        ),
+      confirmPassword: z.string({
+        required_error: "Confirm password is required",
+      }),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords do not match",
+      path: ["confirmPassword"],
+    }),
+});
+
+export const resetPasswordDirectSchema = z.object({
+  body: z
+    .object({
+      email: z
+        .string({ required_error: "Email is required" })
+        .email("Please provide a valid email")
+        .toLowerCase(),
+      password: z
+        .string({ required_error: "Password is required" })
+        .min(6, "Password must be at least 6 characters")
+        .regex(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+          "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+        ),
+      confirmPassword: z.string({
+        required_error: "Confirm password is required",
+      }),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords do not match",
+      path: ["confirmPassword"],
+    }),
+});
+
 export const validate =
   (schema: AnyZodObject) =>
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {

@@ -50,3 +50,45 @@ export const useRegister = () => {
     },
   });
 };
+
+export const useForgotPassword = () => {
+  return useMutation({
+    mutationFn: (email: string) => authApi.forgotPassword(email),
+    onSuccess: (response) => {
+      toast.success(response.message || "Reset link sent to your email!");
+    },
+    onError: (error: any) => {
+      const message =
+        error.response?.data?.message || "Failed to send reset link.";
+      toast.error(message);
+    },
+  });
+};
+
+export const useResetPassword = () => {
+  return useMutation({
+    mutationFn: ({ token, data }: { token: string; data: any }) =>
+      authApi.resetPassword(token, data),
+    onSuccess: (response) => {
+      toast.success(response.message || "Password reset successful!");
+    },
+    onError: (error: any) => {
+      const message = error.response?.data?.message || "Failed to reset password.";
+      toast.error(message);
+    },
+  });
+};
+
+export const useResetPasswordDirect = () => {
+  return useMutation({
+    mutationFn: (data: any) => authApi.resetPasswordDirect(data),
+    onSuccess: (response) => {
+      toast.success(response.message || "Password updated successfully!");
+    },
+    onError: (error: any) => {
+      const message =
+        error.response?.data?.message || "Failed to update password.";
+      toast.error(message);
+    },
+  });
+};

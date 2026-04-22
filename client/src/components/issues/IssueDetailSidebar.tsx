@@ -91,7 +91,7 @@ export const IssueDetailSidebar = ({
   const hasActions = canResolve || canClose || canReopen;
 
   return (
-    <div className="space-y-4 text-[11px] uppercase font-black tracking-widest text-muted-foreground">
+    <div className="space-y-4 text-[11px] font-black tracking-widest text-muted-foreground">
       <div className="bg-card border border-border/60 rounded-3xl overflow-hidden shadow-xl shadow-foreground/[0.02]">
         <SidebarCardHeader icon={<MdFolder size={16} />} title="Project" />
         <div className="p-6">

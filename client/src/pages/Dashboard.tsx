@@ -69,7 +69,7 @@ export const Dashboard = () => {
   if (statsLoading) return <DashboardSkeleton />;
 
   return (
-    <div className="flex flex-col gap-8 h-[calc(100vh-7rem)] animate-in slide-in-from-bottom-4 fade-in duration-700 ease-out">
+    <div className="flex flex-col gap-6 lg:gap-8 h-auto lg:h-[calc(100vh-7rem)] lg:overflow-hidden pb-8 lg:pb-0 animate-in slide-in-from-bottom-4 fade-in duration-700 ease-out">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-3xl font-bold tracking-tighter text-foreground">

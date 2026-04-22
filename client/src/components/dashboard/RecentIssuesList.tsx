@@ -80,7 +80,7 @@ export const RecentIssuesList = ({
   const navigate = useNavigate();
 
   return (
-    <div className="flex-1 rounded-2xl border border-border/40 bg-secondary/20 backdrop-blur-md overflow-hidden relative flex flex-col">
+    <div className="flex-1 min-h-0 rounded-2xl border border-border/40 bg-secondary/20 backdrop-blur-md overflow-hidden relative flex flex-col">
       <div className="absolute inset-x-0 -top-px h-px w-full bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
       <div className="flex items-center justify-between px-6 py-4 border-b border-border/20">
@@ -116,7 +116,7 @@ export const RecentIssuesList = ({
           variant="default"
         />
       ) : (
-        <div className="p-3">
+        <div className="lg:flex-1 lg:overflow-y-auto p-3 custom-scrollbar min-h-[400px] lg:min-h-0">
           {issues.map((issue, idx) => (
             <div
               key={issue._id}

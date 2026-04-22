@@ -161,7 +161,7 @@ export const IssueDetailPage = () => {
                 <span>Opened {formatRelativeTime(issue.createdAt)}</span>
               </div>
 
-              <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground leading-[1.15]">
+              <h1 className="text-xl md:text-3xl font-extrabold tracking-tight text-foreground leading-[1.15]">
                 {issue.title}
               </h1>
             </div>
@@ -170,8 +170,8 @@ export const IssueDetailPage = () => {
           <div className="relative overflow-hidden bg-card border border-border/60 rounded-3xl shadow-xl shadow-foreground/[0.02]">
             <div className="relative p-8 md:p-10">
               <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 border border-blue-500/20 shadow-inner">
-                  <MdDescription size={20} />
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center text-brand-500 border border-blue-500/20 shadow-inner">
+                  <MdDescription size={18} />
                 </div>
                 <div>
                   <h2 className="text-sm font-black uppercase tracking-widest text-foreground">
@@ -185,7 +185,7 @@ export const IssueDetailPage = () => {
 
               {issue.description ? (
                 <div
-                  className="prose dark:prose-invert max-w-none text-[15px] leading-[1.75] text-foreground/90 selection:bg-brand-500/30
+                  className="prose dark:prose-invert max-w-none text-sm leading-[1.7] text-foreground/90 selection:bg-brand-500/30
                              prose-headings:font-bold prose-headings:tracking-tight prose-a:text-brand-400 prose-a:no-underline hover:prose-a:underline"
                   dangerouslySetInnerHTML={{ __html: issue.description }}
                 />

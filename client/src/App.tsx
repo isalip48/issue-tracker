@@ -16,6 +16,8 @@ import { ProjectsPage } from "./pages/ProjectsPage";
 import { useUIStore } from "@/store/uiStore";
 import { SettingsPage } from "./pages/SettingsPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
+import { ResetPasswordPage } from "./pages/ResetPasswordPage";
 
 function App() {
   const { isDarkMode } = useUIStore();
@@ -34,10 +36,22 @@ function App() {
           richColors
           expand={false}
           duration={3000}
+          toastOptions={{
+            style: {
+              borderRadius: "14px",
+              border: "1px solid hsl(var(--border) / 0.5)",
+              background: "hsl(var(--card) / 0.8)",
+              backdropFilter: "blur(12px)",
+              fontSize: "13px",
+              fontWeight: 500,
+            },
+          }}
         />
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>

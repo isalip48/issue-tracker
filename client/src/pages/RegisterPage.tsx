@@ -240,9 +240,11 @@ export const RegisterPage = () => {
           )}
         </div>
 
-        <AsyncButton type="submit" isLoading={isPending} className="mt-6">
-          Create account
-        </AsyncButton>
+        <div className="flex justify-end">
+          <AsyncButton type="submit" isLoading={isPending} className="mt-6">
+            Create account
+          </AsyncButton>
+        </div>
       </form>
     </AuthLayout>
   );

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../models/User";
 import { generateTokens, verifyRefreshToken } from "../utils/jwt";
+import crypto from "crypto";
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -133,5 +134,115 @@ export const getMe = async (req: Request, res: Response): Promise<void> => {
     res.status(200).json({ success: true, data: { user } });
   } catch (error) {
     res.status(500).json({ success: false, message: (error as Error).message });
+  }
+};
+
+export const forgotPassword = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: "There is no user with that email",
+      });
+      return;
+    }
+
+    const resetToken = user.getResetPasswordToken();
+    await user.save({ validateBeforeSave: false });
+
+    // In a real app, send an email here.
+    // For now, we'll return it in the response for development.
+    console.log(`Reset Token for ${email}: ${resetToken}`);
+
+    res.status(200).json({
+      success: true,
+      message: "Reset token generated",
+      data: { resetToken }, // REMOVE THIS IN PRODUCTION
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: (error as Error).message,
+    });
+  }
+};
+
+export const resetPassword = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid or expired token",
+      });
+      return;
+    }
+
+    user.password = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Password reset successful",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: (error as Error).message,
+    });
+  }
+};
+
+export const resetPasswordDirect = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+      return;
+    }
+
+    user.password = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Password updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: (error as Error).message,
+    });
   }
 };

@@ -3,9 +3,9 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useUIStore } from "@/store/uiStore";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Navbar } from "@/components/layout/Navbar";
-import { CommandPalette } from "../shared/CommandPalette";
-import { KeyboardShortcutsModal } from "../shared/KeyboardShortcutsModal";
-import { useAppShortcuts } from "../../hooks/useKeyboardShortcuts";
+import { CommandPalette } from "@/components/shared/CommandPalette";
+import { KeyboardShortcutsModal } from "@/components/shared/KeyboardShortcutsModal";
+import { useAppShortcuts } from "@/hooks/useKeyboardShortcuts";
 
 
 export const AppLayout = () => {

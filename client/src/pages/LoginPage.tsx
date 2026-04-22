@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLogin } from "@/hooks/useAuth";
@@ -81,11 +81,21 @@ export const LoginPage = () => {
             error={errors.password?.message}
             {...register("password")}
           />
+          <div className="flex justify-end mt-1.5">
+            <Link
+              to="/forgot-password"
+              className="text-[11px] font-medium text-muted-foreground hover:text-primary transition-colors"
+            >
+              Forgot password?
+            </Link>
+          </div>
         </div>
 
-        <AsyncButton type="submit" isLoading={isPending} className="mt-6">
-          Continue to workspace
-        </AsyncButton>
+        <div >
+          <AsyncButton type="submit" isLoading={isPending}>
+            Continue to workspace
+          </AsyncButton>
+        </div>
       </form>
     </AuthLayout>
   );
