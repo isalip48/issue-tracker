@@ -39,11 +39,9 @@ export const Pagination = ({
     return pages;
   };
 
-  if (totalPages <= 1) return null;
-
   return (
     <div className="flex items-center justify-between px-1 py-3">
-      <p className="text-xs text-muted-foreground">
+      <p className="text-xs text-muted-foreground just">
         Showing <span className="font-medium text-foreground">{startItem}</span>
         {" – "}
         <span className="font-medium text-foreground">{endItem}</span>
@@ -52,55 +50,57 @@ export const Pagination = ({
         {" issues"}
       </p>
 
-      <div className="flex items-center gap-1">
-        <button
-          onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          className={cn(
-            "p-1.5 rounded-lg border border-border text-muted-foreground",
-            "hover:bg-secondary hover:text-foreground transition-colors",
-            "disabled:opacity-40 disabled:cursor-not-allowed",
-          )}
-        >
-          <MdChevronLeft size={18} />
-        </button>
+      {totalPages > 1 && (
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => onPageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={cn(
+              "p-1.5 rounded-lg border border-border text-muted-foreground",
+              "hover:bg-secondary hover:text-foreground transition-colors",
+              "disabled:opacity-40 disabled:cursor-not-allowed",
+            )}
+          >
+            <MdChevronLeft size={18} />
+          </button>
 
-        {getPageNumbers().map((page, index) =>
-          page === "..." ? (
-            <span
-              key={`ellipsis-${index}`}
-              className="px-2 text-sm text-muted-foreground"
-            >
-              ...
-            </span>
-          ) : (
-            <button
-              key={page}
-              onClick={() => onPageChange(page)}
-              className={cn(
-                "min-w-[32px] h-8 px-2 rounded-lg text-sm font-medium transition-colors",
-                currentPage === page
-                  ? "bg-brand-500 text-white"
-                  : "border border-border text-muted-foreground hover:bg-secondary hover:text-foreground",
-              )}
-            >
-              {page}
-            </button>
-          ),
-        )}
-
-        <button
-          onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className={cn(
-            "p-1.5 rounded-lg border border-border text-muted-foreground",
-            "hover:bg-secondary hover:text-foreground transition-colors",
-            "disabled:opacity-40 disabled:cursor-not-allowed",
+          {getPageNumbers().map((page, index) =>
+            page === "..." ? (
+              <span
+                key={`ellipsis-${index}`}
+                className="px-2 text-sm text-muted-foreground"
+              >
+                ...
+              </span>
+            ) : (
+              <button
+                key={page}
+                onClick={() => onPageChange(page)}
+                className={cn(
+                  "min-w-[32px] h-8 px-2 rounded-lg text-sm font-medium transition-colors",
+                  currentPage === page
+                    ? "bg-brand-500 text-white"
+                    : "border border-border text-muted-foreground hover:bg-secondary hover:text-foreground",
+                )}
+              >
+                {page}
+              </button>
+            ),
           )}
-        >
-          <MdChevronRight size={18} />
-        </button>
-      </div>
+
+          <button
+            onClick={() => onPageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className={cn(
+              "p-1.5 rounded-lg border border-border text-muted-foreground",
+              "hover:bg-secondary hover:text-foreground transition-colors",
+              "disabled:opacity-40 disabled:cursor-not-allowed",
+            )}
+          >
+            <MdChevronRight size={18} />
+          </button>
+        </div>
+      )}
     </div>
   );
 };

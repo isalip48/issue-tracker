@@ -228,7 +228,7 @@ export const IssueListPage = ({ presetAssignee }: IssueListPageProps) => {
         )}
       </div>
 
-      {pagination && pagination.totalPages > 1 && (
+      {pagination && pagination.total > 0 && (
         <Pagination
           currentPage={pagination.page}
           totalPages={pagination.totalPages}
