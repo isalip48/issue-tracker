@@ -28,15 +28,15 @@ export const AppLayout = () => {
 
 
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="h-screen bg-background relative overflow-hidden">
       <Sidebar />
 
       <div
-        className="relative z-10 flex flex-col min-h-screen transition-all duration-300 ease-out"
+        className="relative z-10 flex flex-col h-screen transition-all duration-300 ease-out"
         style={{ marginLeft: isSidebarOpen ? "256px" : "72px" }}
       >
         <Navbar />
-        <main className="flex-1 pt-20 p-8">
+        <main className="flex-1 pt-20 p-8 overflow-hidden">
           <Outlet />
         </main>
 
