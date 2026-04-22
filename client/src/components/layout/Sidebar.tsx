@@ -121,6 +121,7 @@ export const Sidebar = () => {
           <NavLink
             key={to}
             to={to}
+            end={to === "/issues" || to === "/dashboard"}
             className={({ isActive }) =>
               cn(
                 "group flex items-center gap-4 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 relative",
