@@ -5,7 +5,6 @@
 Create, assign, prioritise, and resolve bugs and tasks with a sleek dark UI, rich text descriptions, real-time analytics, project workspaces, and power-user keyboard shortcuts - deployed on a split-hosting architecture for production-grade performance.
 
 ![Version](https://img.shields.io/badge/version-1.0.0-6366f1?style=flat-square)
-![License](https://img.shields.io/badge/license-MIT-22c55e?style=flat-square)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3b82f6?style=flat-square)
 ![React](https://img.shields.io/badge/React-18.x-61dafb?style=flat-square)
 ![Node](https://img.shields.io/badge/Node.js-20.x-22c55e?style=flat-square)
@@ -19,7 +18,7 @@ Create, assign, prioritise, and resolve bugs and tasks with a sleek dark UI, ric
 | **Frontend**       | [https://issue-tracker-client-tau.vercel.app](https://issue-tracker-client-tau.vercel.app) |
 | **Backend Health** | [https://issueforge.duckdns.org/api/health](https://issueforge.duckdns.org/api/health)     |
 
-> **Test Credentials** — Email: `demo@issueforge.com` · Password: `Demo1234`
+> **Test Credentials** - Email: `demo@issueforge.com` · Password: `Demo1234`
 
 ---
 
